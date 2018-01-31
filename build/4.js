@@ -16600,22 +16600,21 @@ var LookPage = (function () {
         this.sanitizer = sanitizer;
         this.screenWidth = window.screen.availWidth;
         this.screenHeight = window.screen.availHeight;
-        this.updateVideoUrl(this.navParams.get('item'));
     }
-    LookPage.prototype.updateVideoUrl = function (item) {
-        var dangerousVideoUrl = 'http://blockchain.alphamao.top/index.php?address=' + item.addr;
+    LookPage.prototype.updateVideoUrl = function () {
+        var dangerousVideoUrl = 'http://blockchain.alphamao.top/index.php?address=' + this.navParams.get('item').addr;
         console.log(dangerousVideoUrl);
         return this.sanitizer.bypassSecurityTrustResourceUrl(dangerousVideoUrl);
     };
     LookPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad tradePage');
+        console.log('ionViewDidLoad LookPage');
     };
     return LookPage;
 }());
 LookPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* IonicPage */])(),
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-look',template:/*ion-inline-start:"E:\github\wkb\src\pages\look\look.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-title>区块链交易查询</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content>\n\n  <iframe [src]="updateVideoUrl(\'\')" \n\n    frameborder="0" \n\n    width="100%" \n\n    height="{{screenHeight + \'px\'}}" \n\n    allowfullscreen></iframe>\n\n</ion-content>\n\n'/*ion-inline-end:"E:\github\wkb\src\pages\look\look.html"*/,
+        selector: 'page-look',template:/*ion-inline-start:"E:\github\wkb\src\pages\look\look.html"*/'<ion-header>\n\n  <ion-navbar color="primary">\n\n    <ion-title>区块链交易查询</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content>\n\n  <iframe [src]="updateVideoUrl()" \n\n    frameborder="0" \n\n    width="100%" \n\n    height="{{screenHeight + \'px\'}}" \n\n    allowfullscreen></iframe>\n\n</ion-content>\n\n'/*ion-inline-end:"E:\github\wkb\src\pages\look\look.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__angular_platform_browser__["c" /* DomSanitizer */]])
 ], LookPage);

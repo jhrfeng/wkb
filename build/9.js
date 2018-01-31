@@ -16642,7 +16642,7 @@ var ActdetailPage = (function () {
         }
         this.http.isend({ actid: this.navParams.get('item').actid }, function (result) {
             if (result)
-                _this.navCtrl.push('JoinPage', { actid: _this.navParams.get('item').actid });
+                _this.navCtrl.push('JoinPage', { item: _this.navParams.get('item') });
         });
     };
     ActdetailPage.prototype.ionViewDidLoad = function () {

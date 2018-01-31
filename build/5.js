@@ -16603,7 +16603,7 @@ var JoinPage = (function () {
         this.clipboard = clipboard;
         this.values = '';
         this.act = {};
-        this.detail(this.navParams.get('actid'));
+        this.detail(this.navParams.get('item').actid);
     }
     JoinPage.prototype.detail = function (id) {
         var _this = this;
@@ -16614,7 +16614,8 @@ var JoinPage = (function () {
         });
     };
     JoinPage.prototype.next = function () {
-        this.navCtrl.push('TradePage', { actid: this.navParams.get('actid') });
+        this.navCtrl.pop();
+        this.navCtrl.push('TradePage', { item: this.navParams.get('item') });
     };
     JoinPage.prototype.copy = function () {
         this.clipboard.copy(this.act.addr);
