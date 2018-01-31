@@ -21628,7 +21628,7 @@ page-home .banner-1 {
 }
 
 page-home .banner-2 {
-  background-image: url(../assets/img/h-banner-1.png);
+  background-image: url(../assets/img/h-banner-2.png);
 }
 
 page-home .banner-3 {
@@ -21788,6 +21788,35 @@ page-login button[ion-button] {
   border-radius: 6px;
 }
 
+page-trade .content {
+  background: #fff;
+}
+
+page-trade .item-1 span {
+  font-size: 1.5rem;
+  color: #262626;
+}
+
+page-trade .item-1 span:last-child {
+  float: right;
+  padding: 0 10px;
+  color: #d72e2e;
+}
+
+page-trade .item-2 {
+  padding-top: 4px;
+}
+
+page-trade .item-2 span {
+  color: #585858;
+  font-size: 1.3rem;
+}
+
+page-trade .item-2 span:last-child {
+  float: right;
+  padding: 0 10px;
+}
+
 page-me .content {
   background: #fff;
 }
@@ -21904,7 +21933,7 @@ page-result ion-buttons span {
 page-result .act-1 {
   margin: 0 auto;
   height: 13.1rem;
-  background-image: url(../assets/img/banner.png);
+  background-image: url(../assets/img/banner2.png);
   background-repeat: no-repeat;
   background-size: cover;
 }

@@ -1,4 +1,4 @@
-webpackJsonp([10],{
+webpackJsonp([11],{
 
 /***/ 111:
 /***/ (function(module, exports) {
@@ -22,44 +22,48 @@ webpackEmptyAsyncContext.id = 111;
 
 var map = {
 	"../pages/actdetail/actdetail.module": [
-		276,
-		8
-	],
-	"../pages/actlist/actlist.module": [
 		277,
-		7
-	],
-	"../pages/game/game.module": [
-		278,
-		6
-	],
-	"../pages/home/home.module": [
-		279,
-		5
-	],
-	"../pages/join/join.module": [
-		280,
-		0
-	],
-	"../pages/me/me.module": [
-		281,
-		4
-	],
-	"../pages/myact/myact.module": [
-		282,
-		3
-	],
-	"../pages/news/news.module": [
-		283,
 		9
 	],
-	"../pages/result/result.module": [
+	"../pages/actlist/actlist.module": [
+		278,
+		8
+	],
+	"../pages/game/game.module": [
+		279,
+		7
+	],
+	"../pages/home/home.module": [
+		280,
+		6
+	],
+	"../pages/join/join.module": [
+		281,
+		5
+	],
+	"../pages/look/look.module": [
+		282,
+		4
+	],
+	"../pages/me/me.module": [
+		283,
+		3
+	],
+	"../pages/myact/myact.module": [
 		284,
 		2
 	],
-	"../pages/trade/trade.module": [
+	"../pages/news/news.module": [
 		285,
+		10
+	],
+	"../pages/result/result.module": [
+		286,
 		1
+	],
+	"../pages/trade/trade.module": [
+		287,
+		0
 	]
 };
 function webpackAsyncContext(req) {
@@ -105,10 +109,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var HttpProvider = (function () {
     // SERVER = 'http://127.0.0.1:3200' 
-    function HttpProvider(http, storage, alertCtrl) {
+    function HttpProvider(http, storage, alertCtrl, loadingCtrl) {
         this.http = http;
         this.storage = storage;
         this.alertCtrl = alertCtrl;
+        this.loadingCtrl = loadingCtrl;
         this.SERVER = 'http://47.52.29.233:3200';
         console.log('Hello HttpProvider Provider');
     }
@@ -148,7 +153,7 @@ var HttpProvider = (function () {
                     resolve(JSON.parse(res['_body']));
                 }, function (err) {
                     if (err['status'] == 401)
-                        _this.show('请先登录');
+                        _this.showLoader('请先登录');
                     else
                         _this.show('服务异常');
                     reject(err);
@@ -183,12 +188,22 @@ var HttpProvider = (function () {
         });
         alert.present(prompt);
     };
+    HttpProvider.prototype.showLoader = function (content) {
+        var _this = this;
+        this.loading = this.loadingCtrl.create({
+            content: content
+        });
+        this.loading.present();
+        setTimeout(function () {
+            _this.loading.dismiss();
+        }, 1000);
+    };
     return HttpProvider;
 }());
 HttpProvider = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_2__ionic_storage__["b" /* Storage */],
-        __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["a" /* AlertController */]])
+        __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["g" /* LoadingController */]])
 ], HttpProvider);
 
 //# sourceMappingURL=http.js.map
@@ -250,7 +265,7 @@ var RegisterPage = (function () {
 }());
 RegisterPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-register',template:/*ion-inline-start:"E:\github\yqbapp\src\pages\register\register.html"*/'<ion-header>\n\n  	<ion-navbar color="primary">\n\n    	<ion-title>注  册</ion-title>\n\n  	</ion-navbar>\n\n</ion-header>\n\n\n\n\n\n<ion-content>\n\n	<ion-list margin-top inset>\n\n	  	<ion-item padding-left padding-right>\n\n	    	<ion-input [(ngModel)]="user.addr" type="text" placeholder="请输入钱包地址"></ion-input>\n\n	  	</ion-item>\n\n	  	<ion-item padding-left padding-right>\n\n	    	<ion-input [(ngModel)]="user.password" type="password" placeholder="请输入密码"></ion-input>\n\n	  	</ion-item>\n\n	  	<ion-item padding-left padding-right>\n\n	    	<ion-input [(ngModel)]="user.spassword" type="password" placeholder="请再次输入密码"></ion-input>\n\n	  	</ion-item>\n\n	  	<ion-item no-lines clear>\n\n	  		<span item-end>密码丢失后不可找回</span>\n\n	  	</ion-item>\n\n	</ion-list>\n\n\n\n    <div padding class="btn">\n\n	  	<button ion-button full \n\n	  	(click)="register()">注  册</button>\n\n	</div>\n\n</ion-content>\n\n'/*ion-inline-end:"E:\github\yqbapp\src\pages\register\register.html"*/,
+        selector: 'page-register',template:/*ion-inline-start:"E:\github\wkb\src\pages\register\register.html"*/'<ion-header>\n\n  	<ion-navbar color="primary">\n\n    	<ion-title>注  册</ion-title>\n\n  	</ion-navbar>\n\n</ion-header>\n\n\n\n\n\n<ion-content>\n\n	<ion-list margin-top inset>\n\n	  	<ion-item padding-left padding-right>\n\n	    	<ion-input [(ngModel)]="user.addr" type="text" placeholder="请输入钱包地址"></ion-input>\n\n	  	</ion-item>\n\n	  	<ion-item padding-left padding-right>\n\n	    	<ion-input [(ngModel)]="user.password" type="password" placeholder="请输入密码"></ion-input>\n\n	  	</ion-item>\n\n	  	<ion-item padding-left padding-right>\n\n	    	<ion-input [(ngModel)]="user.spassword" type="password" placeholder="请再次输入密码"></ion-input>\n\n	  	</ion-item>\n\n	  	<ion-item no-lines clear>\n\n	  		<span item-end>密码丢失后不可找回</span>\n\n	  	</ion-item>\n\n	</ion-list>\n\n\n\n    <div padding class="btn">\n\n	  	<button ion-button full \n\n	  	(click)="register()">注  册</button>\n\n	</div>\n\n</ion-content>\n\n'/*ion-inline-end:"E:\github\wkb\src\pages\register\register.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_http_service_http_service__["a" /* HttpServiceProvider */]])
 ], RegisterPage);
@@ -351,7 +366,7 @@ var ForgetPage = (function () {
 }());
 ForgetPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-forget',template:/*ion-inline-start:"E:\github\yqbapp\src\pages\forget\forget.html"*/'<ion-header>\n\n  	<ion-navbar color="primary">\n\n    	<ion-title>忘记密码</ion-title>\n\n  	</ion-navbar>\n\n</ion-header>\n\n\n\n\n\n<ion-content>\n\n	<ion-list margin-top inset>\n\n	  	<ion-item padding-left padding-right>\n\n	  		<ion-icon name="ios-phone-portrait-outline" item-start></ion-icon>\n\n	    	<ion-input [(ngModel)]="user.username" type="text" placeholder="请输入手机号"></ion-input>\n\n	  	</ion-item>\n\n	  	<ion-item padding-left padding-right>\n\n	  		<ion-icon name="ios-mail-outline" item-start></ion-icon>\n\n	    	<ion-input [(ngModel)]="user.smscode" type="text" \n\n			maxlength="6"\n\n	    	placeholder="请输入验证码"></ion-input>\n\n	    	<button ion-button round item-end\n\n	    	[disabled]="sms.ok"\n\n	    	(click)="sendsms()">{{sms.text}}</button>\n\n	  	</ion-item>\n\n	  	<ion-item padding-left padding-right>\n\n	  		<ion-icon name="ios-lock-outline" item-start></ion-icon>\n\n	    	<ion-input [(ngModel)]="user.password" type="password" placeholder="请输入新密码"></ion-input>\n\n	  	</ion-item>\n\n	  	<ion-item padding-left padding-right>\n\n	  		<ion-icon name="ios-lock-outline" item-start></ion-icon>\n\n	    	<ion-input [(ngModel)]="user.oldpassword" type="password" placeholder="请再次输入密码"></ion-input>\n\n	  	</ion-item>\n\n	  	<ion-item no-lines clear></ion-item>\n\n	</ion-list>\n\n\n\n    <div padding class="btn">\n\n	  	<button ion-button full\n\n	  	(click)="forget()">提  交</button>\n\n	</div>\n\n</ion-content>\n\n'/*ion-inline-end:"E:\github\yqbapp\src\pages\forget\forget.html"*/,
+        selector: 'page-forget',template:/*ion-inline-start:"E:\github\wkb\src\pages\forget\forget.html"*/'<ion-header>\n\n  	<ion-navbar color="primary">\n\n    	<ion-title>忘记密码</ion-title>\n\n  	</ion-navbar>\n\n</ion-header>\n\n\n\n\n\n<ion-content>\n\n	<ion-list margin-top inset>\n\n	  	<ion-item padding-left padding-right>\n\n	  		<ion-icon name="ios-phone-portrait-outline" item-start></ion-icon>\n\n	    	<ion-input [(ngModel)]="user.username" type="text" placeholder="请输入手机号"></ion-input>\n\n	  	</ion-item>\n\n	  	<ion-item padding-left padding-right>\n\n	  		<ion-icon name="ios-mail-outline" item-start></ion-icon>\n\n	    	<ion-input [(ngModel)]="user.smscode" type="text" \n\n			maxlength="6"\n\n	    	placeholder="请输入验证码"></ion-input>\n\n	    	<button ion-button round item-end\n\n	    	[disabled]="sms.ok"\n\n	    	(click)="sendsms()">{{sms.text}}</button>\n\n	  	</ion-item>\n\n	  	<ion-item padding-left padding-right>\n\n	  		<ion-icon name="ios-lock-outline" item-start></ion-icon>\n\n	    	<ion-input [(ngModel)]="user.password" type="password" placeholder="请输入新密码"></ion-input>\n\n	  	</ion-item>\n\n	  	<ion-item padding-left padding-right>\n\n	  		<ion-icon name="ios-lock-outline" item-start></ion-icon>\n\n	    	<ion-input [(ngModel)]="user.oldpassword" type="password" placeholder="请再次输入密码"></ion-input>\n\n	  	</ion-item>\n\n	  	<ion-item no-lines clear></ion-item>\n\n	</ion-list>\n\n\n\n    <div padding class="btn">\n\n	  	<button ion-button full\n\n	  	(click)="forget()">提  交</button>\n\n	</div>\n\n</ion-content>\n\n'/*ion-inline-end:"E:\github\wkb\src\pages\forget\forget.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_http_service_http_service__["a" /* HttpServiceProvider */]])
 ], ForgetPage);
@@ -385,7 +400,7 @@ var TabsPage = (function () {
     return TabsPage;
 }());
 TabsPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({template:/*ion-inline-start:"E:\github\yqbapp\src\pages\tabs\tabs.html"*/'<ion-tabs>\n\n  <ion-tab [root]="tab1Root" tabTitle="首页" tabIcon="home"></ion-tab>\n\n  <ion-tab [root]="tab2Root" tabTitle="活动" tabIcon="pricetag"></ion-tab>\n\n  <ion-tab [root]="tab3Root" tabTitle="我"   tabIcon="contact"></ion-tab>\n\n</ion-tabs>\n\n'/*ion-inline-end:"E:\github\yqbapp\src\pages\tabs\tabs.html"*/
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({template:/*ion-inline-start:"E:\github\wkb\src\pages\tabs\tabs.html"*/'<ion-tabs>\n\n  <ion-tab [root]="tab1Root" tabTitle="首页" tabIcon="home"></ion-tab>\n\n  <ion-tab [root]="tab2Root" tabTitle="活动" tabIcon="pricetag"></ion-tab>\n\n  <ion-tab [root]="tab3Root" tabTitle="我"   tabIcon="contact"></ion-tab>\n\n</ion-tabs>\n\n'/*ion-inline-end:"E:\github\wkb\src\pages\tabs\tabs.html"*/
     }),
     __metadata("design:paramtypes", [])
 ], TabsPage);
@@ -394,13 +409,13 @@ TabsPage = __decorate([
 
 /***/ }),
 
-/***/ 201:
+/***/ 202:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(202);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(220);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(203);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(221);
 
 
 Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
@@ -408,7 +423,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 
 /***/ }),
 
-/***/ 220:
+/***/ 221:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -416,22 +431,22 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_component__ = __webpack_require__(271);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_about_about__ = __webpack_require__(272);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_contact_contact__ = __webpack_require__(273);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_component__ = __webpack_require__(272);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_about_about__ = __webpack_require__(273);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_contact_contact__ = __webpack_require__(274);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_tabs_tabs__ = __webpack_require__(200);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_login_login__ = __webpack_require__(50);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_register_register__ = __webpack_require__(157);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_forget_forget__ = __webpack_require__(158);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_setting_setting__ = __webpack_require__(274);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_setting_setting__ = __webpack_require__(275);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_status_bar__ = __webpack_require__(198);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_splash_screen__ = __webpack_require__(199);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__angular_http__ = __webpack_require__(155);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ionic_storage__ = __webpack_require__(79);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__ionic_native_clipboard__ = __webpack_require__(418);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__ionic_native_clipboard__ = __webpack_require__(201);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__providers_http_http__ = __webpack_require__(154);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__providers_http_service_http_service__ = __webpack_require__(39);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__providers_util_util__ = __webpack_require__(275);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__providers_util_util__ = __webpack_require__(276);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -488,6 +503,7 @@ AppModule = __decorate([
                     { loadChildren: '../pages/game/game.module#GamePageModule', name: 'GamePage', segment: 'game', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/home/home.module#HomePageModule', name: 'HomePage', segment: 'home', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/join/join.module#JoinPageModule', name: 'JoinPage', segment: 'join', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/look/look.module#LookPageModule', name: 'LookPage', segment: 'look', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/me/me.module#MePageModule', name: 'MePage', segment: 'me', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/myact/myact.module#MyactPageModule', name: 'MyactPage', segment: 'myact', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/news/news.module#NewsPageModule', name: 'NewsPage', segment: 'news', priority: 'low', defaultHistory: [] },
@@ -524,7 +540,7 @@ AppModule = __decorate([
 
 /***/ }),
 
-/***/ 271:
+/***/ 272:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -563,7 +579,7 @@ var MyApp = (function () {
     return MyApp;
 }());
 MyApp = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({template:/*ion-inline-start:"E:\github\yqbapp\src\app\app.html"*/'<ion-nav [root]="rootPage"></ion-nav>\n'/*ion-inline-end:"E:\github\yqbapp\src\app\app.html"*/
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({template:/*ion-inline-start:"E:\github\wkb\src\app\app.html"*/'<ion-nav [root]="rootPage"></ion-nav>\n\n'/*ion-inline-end:"E:\github\wkb\src\app\app.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]])
 ], MyApp);
@@ -572,7 +588,7 @@ MyApp = __decorate([
 
 /***/ }),
 
-/***/ 272:
+/***/ 273:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -598,7 +614,7 @@ var AboutPage = (function () {
 }());
 AboutPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-about',template:/*ion-inline-start:"E:\github\yqbapp\src\pages\about\about.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n      About\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n\n</ion-content>\n'/*ion-inline-end:"E:\github\yqbapp\src\pages\about\about.html"*/
+        selector: 'page-about',template:/*ion-inline-start:"E:\github\wkb\src\pages\about\about.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-title>\n\n      About\n\n    </ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"E:\github\wkb\src\pages\about\about.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */]])
 ], AboutPage);
@@ -607,7 +623,7 @@ AboutPage = __decorate([
 
 /***/ }),
 
-/***/ 273:
+/***/ 274:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -633,7 +649,7 @@ var ContactPage = (function () {
 }());
 ContactPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-contact',template:/*ion-inline-start:"E:\github\yqbapp\src\pages\contact\contact.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n      Contact\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <ion-list-header>Follow us on Twitter</ion-list-header>\n    <ion-item>\n      <ion-icon name="ionic" item-left></ion-icon>\n      @ionicframework\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"E:\github\yqbapp\src\pages\contact\contact.html"*/
+        selector: 'page-contact',template:/*ion-inline-start:"E:\github\wkb\src\pages\contact\contact.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-title>\n\n      Contact\n\n    </ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content>\n\n  <ion-list>\n\n    <ion-list-header>Follow us on Twitter</ion-list-header>\n\n    <ion-item>\n\n      <ion-icon name="ionic" item-left></ion-icon>\n\n      @ionicframework\n\n    </ion-item>\n\n  </ion-list>\n\n</ion-content>\n\n'/*ion-inline-end:"E:\github\wkb\src\pages\contact\contact.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */]])
 ], ContactPage);
@@ -642,7 +658,7 @@ ContactPage = __decorate([
 
 /***/ }),
 
-/***/ 274:
+/***/ 275:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -672,7 +688,7 @@ var SettingPage = (function () {
 }());
 SettingPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-setting',template:/*ion-inline-start:"E:\github\yqbapp\src\pages\setting\setting.html"*/'<ion-header>\n\n  	<ion-navbar color="primary">\n\n   		<ion-buttons start>\n\n      		<button ion-button icon-only>\n\n        		<ion-icon name="ios-notifications-outline"></ion-icon>\n\n      		</button>\n\n    	</ion-buttons>\n\n\n\n    	<ion-buttons end>\n\n      		<button ion-button icon-only (click)="setting()">\n\n        		<ion-icon name="ios-settings-outline"></ion-icon>\n\n      		</button>\n\n    	</ion-buttons>\n\n  	</ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content>\n\n	\n\n	<h1>111111111111</h1>\n\n	\n\n</ion-content>'/*ion-inline-end:"E:\github\yqbapp\src\pages\setting\setting.html"*/,
+        selector: 'page-setting',template:/*ion-inline-start:"E:\github\wkb\src\pages\setting\setting.html"*/'<ion-header>\n\n  	<ion-navbar color="primary">\n\n   		<ion-buttons start>\n\n      		<button ion-button icon-only>\n\n        		<ion-icon name="ios-notifications-outline"></ion-icon>\n\n      		</button>\n\n    	</ion-buttons>\n\n\n\n    	<ion-buttons end>\n\n      		<button ion-button icon-only (click)="setting()">\n\n        		<ion-icon name="ios-settings-outline"></ion-icon>\n\n      		</button>\n\n    	</ion-buttons>\n\n  	</ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content>\n\n	\n\n	<h1>111111111111</h1>\n\n	\n\n</ion-content>'/*ion-inline-end:"E:\github\wkb\src\pages\setting\setting.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */]])
 ], SettingPage);
@@ -681,7 +697,7 @@ SettingPage = __decorate([
 
 /***/ }),
 
-/***/ 275:
+/***/ 276:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -991,7 +1007,7 @@ var LoginPage = (function () {
 }());
 LoginPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-login',template:/*ion-inline-start:"E:\github\yqbapp\src\pages\login\login.html"*/'<ion-header>\n\n  	<ion-navbar color="primary">\n\n    	<ion-title>登  录</ion-title>\n\n  	</ion-navbar>\n\n</ion-header>\n\n\n\n\n\n<ion-content>\n\n	<div class="logo">\n\n		<img src="assets/img/login.png" >\n\n	</div>\n\n	<ion-list inset>\n\n	  	<ion-item>\n\n	    	<ion-input type="text" [(ngModel)]="user.username"\n\n	    	 placeholder="登录地址"></ion-input>\n\n	  	</ion-item>\n\n	  	<ion-item>\n\n	    	<ion-input type="password" [(ngModel)]="user.password"\n\n	    	 placeholder="密  码"></ion-input>\n\n	  	</ion-item>\n\n	  	<ion-item no-lines>\n\n	  		<span item-end>登录后请用该地址进行支付</span>\n\n	  	</ion-item>\n\n	</ion-list>\n\n\n\n    <div padding>\n\n	  	<button ion-button full (click)="login()">登  录</button>\n\n	</div>\n\n\n\n	<div padding  class="register">\n\n	  	<button ion-button outline block (click)="register()">注  册</button>\n\n	</div>\n\n</ion-content>\n\n'/*ion-inline-end:"E:\github\yqbapp\src\pages\login\login.html"*/,
+        selector: 'page-login',template:/*ion-inline-start:"E:\github\wkb\src\pages\login\login.html"*/'<ion-header>\n\n  	<ion-navbar color="primary">\n\n    	<ion-title>登  录</ion-title>\n\n  	</ion-navbar>\n\n</ion-header>\n\n\n\n\n\n<ion-content>\n\n	<div class="logo">\n\n		<img src="assets/img/login.png" >\n\n	</div>\n\n	<ion-list inset>\n\n	  	<ion-item>\n\n	    	<ion-input type="text" [(ngModel)]="user.username"\n\n	    	 placeholder="登录地址"></ion-input>\n\n	  	</ion-item>\n\n	  	<ion-item>\n\n	    	<ion-input type="password" [(ngModel)]="user.password"\n\n	    	 placeholder="密  码"></ion-input>\n\n	  	</ion-item>\n\n	  	<ion-item no-lines>\n\n	  		<span item-end>登录后请用该地址进行支付</span>\n\n	  	</ion-item>\n\n	</ion-list>\n\n\n\n    <div padding>\n\n	  	<button ion-button full (click)="login()">登  录</button>\n\n	</div>\n\n\n\n	<div padding  class="register">\n\n	  	<button ion-button outline block (click)="register()">注  册</button>\n\n	</div>\n\n</ion-content>\n\n'/*ion-inline-end:"E:\github\wkb\src\pages\login\login.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */],
@@ -1002,5 +1018,5 @@ LoginPage = __decorate([
 
 /***/ })
 
-},[201]);
+},[202]);
 //# sourceMappingURL=main.js.map
