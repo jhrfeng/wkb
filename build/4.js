@@ -16095,7 +16095,7 @@ __decorate([
 ], ActlistComponent.prototype, "events", void 0);
 ActlistComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'actlist',template:/*ion-inline-start:"E:\github\wkb\src\components\actlist\actlist.html"*/'<ion-grid>\n\n  	<ion-row align-items-start text-center\n\n    *ngFor="let obj of data;">\n\n      	<ion-col (click)="onEvent(\'onDetail\', act)">\n\n        	<div>\n\n            	<br><img src="assets/img/h-act-1.png">\n\n            	<div text-left padding>\n\n              	<span class="home-4-1">{{obj.name}}</span>\n\n              	<br>\n\n                <span class="title">\n\n                  参与\n\n                  <span class="tip">{{obj.price + \' \' }} {{ obj.btype | bcoin}}\n\n                  </span>\n\n                </span>\n\n            </div>  \n\n        </div>\n\n      </ion-col>\n\n  	</ion-row>\n\n</ion-grid>'/*ion-inline-end:"E:\github\wkb\src\components\actlist\actlist.html"*/
+        selector: 'actlist',template:/*ion-inline-start:"/Users/mac/home/yqbapp/src/components/actlist/actlist.html"*/'<ion-grid>\n  	<ion-row align-items-start text-center\n    *ngFor="let obj of data;">\n      	<ion-col (click)="onEvent(\'onDetail\', act)">\n        	<div>\n            	<br><img src="assets/img/h-act-1.png">\n            	<div text-left padding>\n              	<span class="home-4-1">{{obj.name}}</span>\n              	<br>\n                <span class="title">\n                  参与\n                  <span class="tip">{{obj.price + \' \' }} {{ obj.btype | bcoin}}\n                  </span>\n                </span>\n            </div>  \n        </div>\n      </ion-col>\n  	</ion-row>\n</ion-grid>'/*ion-inline-end:"/Users/mac/home/yqbapp/src/components/actlist/actlist.html"*/
     }),
     __metadata("design:paramtypes", [])
 ], ActlistComponent);
@@ -16614,7 +16614,7 @@ var LookPage = (function () {
 LookPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* IonicPage */])(),
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-look',template:/*ion-inline-start:"E:\github\wkb\src\pages\look\look.html"*/'<ion-header>\n\n  <ion-navbar color="primary">\n\n    <ion-title>区块链交易查询</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content>\n\n  <iframe [src]="updateVideoUrl()" \n\n    frameborder="0" \n\n    width="100%" \n\n    height="{{screenHeight + \'px\'}}" \n\n    allowfullscreen></iframe>\n\n</ion-content>\n\n'/*ion-inline-end:"E:\github\wkb\src\pages\look\look.html"*/,
+        selector: 'page-look',template:/*ion-inline-start:"/Users/mac/home/yqbapp/src/pages/look/look.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <ion-title>区块链交易查询</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <iframe [src]="updateVideoUrl()" \n    frameborder="0" \n    width="100%" \n    height="{{screenHeight + \'px\'}}" \n    allowfullscreen></iframe>\n</ion-content>\n'/*ion-inline-end:"/Users/mac/home/yqbapp/src/pages/look/look.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__angular_platform_browser__["c" /* DomSanitizer */]])
 ], LookPage);

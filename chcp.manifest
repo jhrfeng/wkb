@@ -144,6 +144,10 @@
     "hash": "566b1ec627b6571557585ad5f936370c"
   },
   {
+    "file": "assets/img/h-act-1.png",
+    "hash": "a9cf3ac84fd1c316194fbdde40cf89c4"
+  },
+  {
     "file": "assets/img/h-banner-1.png",
     "hash": "3ddbb03eaa11c8c77b93625643502e1e"
   },
@@ -197,95 +201,95 @@
   },
   {
     "file": "build/0.js",
-    "hash": "1967f4059771229cc6be8c0a219b3de5"
+    "hash": "5ef3d2ee9d7593c5c4039c71dfc18ff6"
   },
   {
     "file": "build/0.js.map",
-    "hash": "4c2f3a3ad0a303fc5ea830cbd83f0f91"
+    "hash": "45b994a7e87e6fe3c4b7a8c493ac6d55"
   },
   {
     "file": "build/1.js",
-    "hash": "bbb349c4606028a3cf63e2a2970c1672"
+    "hash": "21fe7ede9d1d0e5130afb2730a9f5e6f"
   },
   {
     "file": "build/1.js.map",
-    "hash": "632db8de218db3a2f81233f5ad703ff7"
+    "hash": "1c6b7d3f6d1ee1e3e4d650be3fe2b492"
   },
   {
     "file": "build/10.js",
-    "hash": "0b4cf6ea9004d159491667c47db199ff"
+    "hash": "62bf1b1dcdfa64fade5b5a4b04970473"
   },
   {
     "file": "build/10.js.map",
-    "hash": "7e4fb1b8052ac4f5cd0c01b01bafa773"
+    "hash": "f7ce3335d8a4fd128073aebe1cb0bb13"
   },
   {
     "file": "build/2.js",
-    "hash": "bd4a7ed47de28d80d008bcb1ceb0b70d"
+    "hash": "2700b72070339c5ae7613aad43f412c9"
   },
   {
     "file": "build/2.js.map",
-    "hash": "9a70e8c8ec0ddaacd6e6d7326636cc99"
+    "hash": "7a712bbde51597407f8c41eacb96e4e2"
   },
   {
     "file": "build/3.js",
-    "hash": "33283a373adfda16f01535e550074d23"
+    "hash": "1bdd7a51da3f96b391a756c93a873e17"
   },
   {
     "file": "build/3.js.map",
-    "hash": "b38306a0f98a5ad323ba12fd0359e6b1"
+    "hash": "45e3d526f629a4745e698c81eafce898"
   },
   {
     "file": "build/4.js",
-    "hash": "34d1094d62c80a23e1b4f332b6e81f56"
+    "hash": "b64d275818801b4567831e04027072ec"
   },
   {
     "file": "build/4.js.map",
-    "hash": "952277dc2028d58fb5c31a400ba69516"
+    "hash": "7d8d8f5208e066274b87dd9edde581c8"
   },
   {
     "file": "build/5.js",
-    "hash": "8243a6177c61da665013114086b21301"
+    "hash": "85d0b8b36e4cfa1ef40b9d7a731d7062"
   },
   {
     "file": "build/5.js.map",
-    "hash": "421ee95a3f802f08640f49c951319fa4"
+    "hash": "635639b44ac8f9e24659cbe7ce1ad522"
   },
   {
     "file": "build/6.js",
-    "hash": "2d7b730ca67cc50e8ab7a13986db5a65"
+    "hash": "b1c2471e97506140b2056e25caec9415"
   },
   {
     "file": "build/6.js.map",
-    "hash": "e83f2538de65cc5039efb16c7109d031"
+    "hash": "42df46c486205671242f276439d8881d"
   },
   {
     "file": "build/7.js",
-    "hash": "9dc5c5612e7f42e52672870a1dda7d04"
+    "hash": "d93a1f66e44c54a491da65d9088e980b"
   },
   {
     "file": "build/7.js.map",
-    "hash": "dbc064a174323c5f9a5a2a3469caa3bd"
+    "hash": "ece130e2ce630c3f5fdfacdeb0cbd6ec"
   },
   {
     "file": "build/8.js",
-    "hash": "62bab63d51663b6159cd366e12913fe9"
+    "hash": "3b65d5e62a486bbeebac8d45ee822630"
   },
   {
     "file": "build/8.js.map",
-    "hash": "297b7bc6d0ed75c76df220e32cb1fbc8"
+    "hash": "f245cb580835efb9981536f3b5c1538f"
   },
   {
     "file": "build/9.js",
-    "hash": "0a331c38ed28d110cfb8c91d8be43ccf"
+    "hash": "db6b6193c9989b5d117fcd86da64fd5a"
   },
   {
     "file": "build/9.js.map",
-    "hash": "410567843a3127e9548e62183db91c81"
+    "hash": "abceb596c02bd11eaa51311a0765074c"
   },
   {
     "file": "build/main.css",
-    "hash": "543b24c6c30ad6e6e98d15cab56b95ba"
+    "hash": "ee4344f9415a7f3e21c060b7845e5cec"
   },
   {
     "file": "build/main.css.map",
@@ -293,11 +297,11 @@
   },
   {
     "file": "build/main.js",
-    "hash": "49b0cd213ae0cff4937116bc42e9e471"
+    "hash": "3ae1227091ada5cd1e1045699e9adb6e"
   },
   {
     "file": "build/main.js.map",
-    "hash": "af427a67bbb2c5dec3cf8181cb5e334e"
+    "hash": "93834f00673764dea3ba920ce9b61c36"
   },
   {
     "file": "build/polyfills.js",
@@ -313,18 +317,18 @@
   },
   {
     "file": "build/vendor.js.map",
-    "hash": "3f301045025f540b3f52f08c34ed696b"
+    "hash": "23c83022475033046c42bb1a7294769f"
   },
   {
     "file": "index.html",
-    "hash": "98bc78945ab0bdad73094bf380b75f99"
+    "hash": "9c499e3aa4437596982e4e59788b60d0"
   },
   {
     "file": "manifest.json",
-    "hash": "16df6fc97fdd1818fa5b22094674fff3"
+    "hash": "df9b99468d4bd4cf2fee5d24ed9badbf"
   },
   {
     "file": "service-worker.js",
-    "hash": "fe89a32de24d7fed2b455c832d1475b1"
+    "hash": "25c3d576a339ab4bbc4750b2363cd14f"
   }
 ]
