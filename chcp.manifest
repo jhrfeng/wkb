@@ -257,11 +257,11 @@
   },
   {
     "file": "build/6.js",
-    "hash": "b1c2471e97506140b2056e25caec9415"
+    "hash": "e28bf5929bd293f40b522278949dff13"
   },
   {
     "file": "build/6.js.map",
-    "hash": "42df46c486205671242f276439d8881d"
+    "hash": "632cad47be6c0935a4aab41f49a52222"
   },
   {
     "file": "build/7.js",
@@ -297,11 +297,11 @@
   },
   {
     "file": "build/main.js",
-    "hash": "3ae1227091ada5cd1e1045699e9adb6e"
+    "hash": "f970547a5a57235a004363825c57fbe4"
   },
   {
     "file": "build/main.js.map",
-    "hash": "93834f00673764dea3ba920ce9b61c36"
+    "hash": "4d7b2cbb6599b87267b2cea339add4e3"
   },
   {
     "file": "build/polyfills.js",
@@ -317,7 +317,7 @@
   },
   {
     "file": "build/vendor.js.map",
-    "hash": "23c83022475033046c42bb1a7294769f"
+    "hash": "298ca38803cd8d0ea93a09de2361b128"
   },
   {
     "file": "index.html",

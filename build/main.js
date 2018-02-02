@@ -108,13 +108,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var HttpProvider = (function () {
-    // SERVER = 'http://127.0.0.1:3200' 
     function HttpProvider(http, storage, alertCtrl, loadingCtrl) {
         this.http = http;
         this.storage = storage;
         this.alertCtrl = alertCtrl;
         this.loadingCtrl = loadingCtrl;
-        this.SERVER = 'http://47.52.29.233:3200';
+        // SERVER = 'http://47.52.29.233:3200' 
+        this.SERVER = 'http://127.0.0.1:3200';
         console.log('Hello HttpProvider Provider');
     }
     HttpProvider.prototype.post = function (url, params) {
@@ -763,6 +763,17 @@ var HttpServiceProvider = (function () {
         this.alertCtrl = alertCtrl;
         console.log('Hello HttpServiceProvider Provider');
     }
+    // 获取消息列表
+    HttpServiceProvider.prototype.newlist = function (callback) {
+        this.http.get('/home/news').then(function (result) {
+            if (result['status'] == 200) {
+                callback(result);
+            }
+            else {
+                callback(null);
+            }
+        }, function (err) { });
+    };
     // 活动是否结束
     HttpServiceProvider.prototype.isend = function (params, callback) {
         var _this = this;

@@ -16603,9 +16603,30 @@ var HomePage = (function () {
             autoplay: 2000,
             autoplayDisableOnInteraction: false
         };
+        this.news = '';
         this.params = { data: [], events: {} };
         this.homelist();
+        this.newlist();
     }
+    // 获取消息列表
+    HomePage.prototype.newlist = function () {
+        var _this = this;
+        this.http.newlist(function (result) {
+            if (result) {
+                var len = result.list.length;
+                var list = result.list;
+                setInterval(function () {
+                    if (len > 0) {
+                        len--;
+                        _this.news = list[len].content;
+                    }
+                    if (len == 0) {
+                        _this.http.newlist(function (result) { len = result.list.length; list = result.list; });
+                    }
+                }, 1500);
+            }
+        });
+    };
     HomePage.prototype.test = function () {
         this.http.show('即将开放');
     };
@@ -16637,7 +16658,7 @@ __decorate([
 HomePage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* IonicPage */])(),
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-home',template:/*ion-inline-start:"/Users/mac/home/yqbapp/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <ion-title>摇钱币</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content class="content">\n    <ion-slides zoom="true" \n      [initialSlide]="homeOptions.initialSlide" \n      [autoplay]="homeOptions.autoplay" \n      [loop]="homeOptions.loop">\n        <ion-slide><div class="banner banner-1"></div></ion-slide>\n        <ion-slide><div class="banner banner-2"></div></ion-slide>\n        <ion-slide><div class="banner banner-1"></div></ion-slide>\n      </ion-slides>\n\n      <ion-list>\n          <ion-grid class="home-2">\n            <ion-row align-items-start text-center>\n              <ion-col>\n                <div (click)="test()"><img src="assets/img/m-1.png"><br>奖励</div>\n              </ion-col>\n              <ion-col>\n                <div (click)="game()"><img src="assets/img/m-2.png"><br>规则</div>\n              </ion-col>\n              <ion-col>\n                <div (click)="test()"><img src="assets/img/m-3.png"><br>品类</div>\n              </ion-col>\n              <ion-col>\n                <div (click)="test()"><img src="assets/img/m-4.png"><br>公告</div>\n              </ion-col>\n            </ion-row>\n          </ion-grid>\n      </ion-list>\n\n      <ion-list class="home-3" no-lines>\n        <ion-item>\n          <ion-icon name="md-volume-up" item-start></ion-icon>\n          <p item-start>恭喜摇钱币APP上线啦！！</p>\n        </ion-item>\n      </ion-list>\n\n      <ion-list class="home-4" no-lines>\n        <ion-item text-center class="home-4-0">\n          <img src="assets/img/h-a-1.png">\n          <span >精品活动</span>\n          <img src="assets/img/h-a-2.png">\n        </ion-item>\n      </ion-list>\n\n      <ion-list>\n          <ion-item *ngFor="let obj of params.data;">\n            <ion-thumbnail item-start>\n              <img src="assets/img/btb.png">\n            </ion-thumbnail>\n            <h2>{{obj.name}}</h2>\n            <p>起投：{{obj.price}}</p>\n            <p>币种：{{ obj.btype | bcoin}}</p>\n            <p>{{obj.end}}</p>\n            <button ion-button clear item-end (click)="detail(obj)" >立即参与</button>\n          </ion-item>\n      </ion-list>\n</ion-content>\n'/*ion-inline-end:"/Users/mac/home/yqbapp/src/pages/home/home.html"*/
+        selector: 'page-home',template:/*ion-inline-start:"/Users/mac/home/yqbapp/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <ion-title>摇钱币</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content class="content">\n    <ion-slides zoom="true" \n      [initialSlide]="homeOptions.initialSlide" \n      [autoplay]="homeOptions.autoplay" \n      [loop]="homeOptions.loop">\n        <ion-slide><div class="banner banner-1"></div></ion-slide>\n        <ion-slide><div class="banner banner-2"></div></ion-slide>\n        <ion-slide><div class="banner banner-1"></div></ion-slide>\n      </ion-slides>\n\n      <ion-list>\n          <ion-grid class="home-2">\n            <ion-row align-items-start text-center>\n              <ion-col>\n                <div (click)="test()"><img src="assets/img/m-1.png"><br>奖励</div>\n              </ion-col>\n              <ion-col>\n                <div (click)="game()"><img src="assets/img/m-2.png"><br>规则</div>\n              </ion-col>\n              <ion-col>\n                <div (click)="test()"><img src="assets/img/m-3.png"><br>品类</div>\n              </ion-col>\n              <ion-col>\n                <div (click)="test()"><img src="assets/img/m-4.png"><br>公告</div>\n              </ion-col>\n            </ion-row>\n          </ion-grid>\n      </ion-list>\n\n      <ion-list class="home-3" no-lines>\n        <ion-item>\n          <ion-icon name="md-volume-up" item-start></ion-icon>\n          <p item-start>{{news}}！！</p>\n        </ion-item>\n      </ion-list>\n\n      <ion-list class="home-4" no-lines>\n        <ion-item text-center class="home-4-0">\n          <img src="assets/img/h-a-1.png">\n          <span >精品活动</span>\n          <img src="assets/img/h-a-2.png">\n        </ion-item>\n      </ion-list>\n\n      <ion-list>\n          <ion-item *ngFor="let obj of params.data;">\n            <ion-thumbnail item-start>\n              <img src="assets/img/btb.png">\n            </ion-thumbnail>\n            <h2>{{obj.name}}</h2>\n            <p>起投：{{obj.price}}</p>\n            <p>币种：{{ obj.btype | bcoin}}</p>\n            <p>{{obj.end}}</p>\n            <button ion-button clear item-end (click)="detail(obj)" >立即参与</button>\n          </ion-item>\n      </ion-list>\n</ion-content>\n'/*ion-inline-end:"/Users/mac/home/yqbapp/src/pages/home/home.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */],
         __WEBPACK_IMPORTED_MODULE_2__providers_http_service_http_service__["a" /* HttpServiceProvider */]])
