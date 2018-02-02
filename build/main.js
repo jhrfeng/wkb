@@ -108,13 +108,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var HttpProvider = (function () {
+    // SERVER = 'http://127.0.0.1:3200' 
     function HttpProvider(http, storage, alertCtrl, loadingCtrl) {
         this.http = http;
         this.storage = storage;
         this.alertCtrl = alertCtrl;
         this.loadingCtrl = loadingCtrl;
-        // SERVER = 'http://47.52.29.233:3200' 
-        this.SERVER = 'http://127.0.0.1:3200';
+        this.SERVER = 'http://47.52.29.233:3200';
         console.log('Hello HttpProvider Provider');
     }
     HttpProvider.prototype.post = function (url, params) {
