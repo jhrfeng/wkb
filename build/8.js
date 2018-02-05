@@ -1,15 +1,15 @@
-webpackJsonp([8],Array(278).concat([
-/* 278 */
+webpackJsonp([8],Array(280).concat([
+/* 280 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ActdetailPageModule", function() { return ActdetailPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Game2PageModule", function() { return Game2PageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_components_module__ = __webpack_require__(408);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pipes_pipes_module__ = __webpack_require__(289);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__actlist__ = __webpack_require__(416);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_components_module__ = __webpack_require__(411);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pipes_pipes_module__ = __webpack_require__(291);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__game_2__ = __webpack_require__(421);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -21,32 +21,30 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var ActdetailPageModule = (function () {
-    function ActdetailPageModule() {
+var Game2PageModule = (function () {
+    function Game2PageModule() {
     }
-    return ActdetailPageModule;
+    return Game2PageModule;
 }());
-ActdetailPageModule = __decorate([
+Game2PageModule = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["L" /* NgModule */])({
         declarations: [
-            __WEBPACK_IMPORTED_MODULE_4__actlist__["a" /* ActlistPage */]
+            __WEBPACK_IMPORTED_MODULE_4__game_2__["a" /* Game2Page */]
         ],
         imports: [
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_4__actlist__["a" /* ActlistPage */]),
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_4__game_2__["a" /* Game2Page */]),
             __WEBPACK_IMPORTED_MODULE_2__components_components_module__["a" /* ComponentsModule */],
             __WEBPACK_IMPORTED_MODULE_3__pipes_pipes_module__["a" /* PipesModule */]
         ],
         exports: [
-            __WEBPACK_IMPORTED_MODULE_4__actlist__["a" /* ActlistPage */]
+            __WEBPACK_IMPORTED_MODULE_4__game_2__["a" /* Game2Page */]
         ]
     })
-], ActdetailPageModule);
+], Game2PageModule);
 
-//# sourceMappingURL=actlist.module.js.map
+//# sourceMappingURL=game-2.module.js.map
 
 /***/ }),
-/* 279 */,
-/* 280 */,
 /* 281 */,
 /* 282 */,
 /* 283 */,
@@ -54,11 +52,13 @@ ActdetailPageModule = __decorate([
 /* 285 */,
 /* 286 */,
 /* 287 */,
-/* 288 */
+/* 288 */,
+/* 289 */,
+/* 290 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module) {var require;//! moment.js
-//! version : 2.19.2
+//! version : 2.20.1
 //! authors : Tim Wood, Iskren Chernev, Moment.js contributors
 //! license : MIT
 //! momentjs.com
@@ -718,7 +718,7 @@ var matchTimestamp = /[+-]?\d+(\.\d{1,3})?/; // 123456789 123456789.123
 
 // any word (or two) characters or numbers including two/three word month in arabic.
 // includes scottish gaelic two word and hyphenated months
-var matchWord = /[0-9]*['a-z\u00A0-\u05FF\u0700-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+|[\u0600-\u06FF\/]+(\s*?[\u0600-\u06FF]+){1,2}/i;
+var matchWord = /[0-9]{0,256}['a-z\u00A0-\u05FF\u0700-\uD7FF\uF900-\uFDCF\uFDF0-\uFF07\uFF10-\uFFEF]{1,256}|[\u0600-\u06FF\/]{1,256}(\s*?[\u0600-\u06FF]{1,256}){1,2}/i;
 
 
 var regexes = {};
@@ -1901,7 +1901,7 @@ function loadLocale(name) {
         try {
             oldLocale = globalLocale._abbr;
             var aliasedRequire = require;
-            __webpack_require__(413)("./" + name);
+            __webpack_require__(416)("./" + name);
             getSetGlobalLocale(oldLocale);
         } catch (e) {}
     }
@@ -2088,7 +2088,7 @@ function currentDateArray(config) {
 // note: all values past the year are optional and will default to the lowest possible value.
 // [year, month, day , hour, minute, second, millisecond]
 function configFromArray (config) {
-    var i, date, input = [], currentDate, yearToUse;
+    var i, date, input = [], currentDate, expectedWeekday, yearToUse;
 
     if (config._d) {
         return;
@@ -2138,6 +2138,8 @@ function configFromArray (config) {
     }
 
     config._d = (config._useUTC ? createUTCDate : createDate).apply(null, input);
+    expectedWeekday = config._useUTC ? config._d.getUTCDay() : config._d.getDay();
+
     // Apply timezone offset from input. The actual utcOffset can be changed
     // with parseZone.
     if (config._tzm != null) {
@@ -2149,7 +2151,7 @@ function configFromArray (config) {
     }
 
     // check for mismatching day of week
-    if (config._w && typeof config._w.d !== 'undefined' && config._w.d !== config._d.getDay()) {
+    if (config._w && typeof config._w.d !== 'undefined' && config._w.d !== expectedWeekday) {
         getParsingFlags(config).weekdayMismatch = true;
     }
 }
@@ -3357,19 +3359,24 @@ function toString () {
     return this.clone().locale('en').format('ddd MMM DD YYYY HH:mm:ss [GMT]ZZ');
 }
 
-function toISOString() {
+function toISOString(keepOffset) {
     if (!this.isValid()) {
         return null;
     }
-    var m = this.clone().utc();
+    var utc = keepOffset !== true;
+    var m = utc ? this.clone().utc() : this;
     if (m.year() < 0 || m.year() > 9999) {
-        return formatMoment(m, 'YYYYYY-MM-DD[T]HH:mm:ss.SSS[Z]');
+        return formatMoment(m, utc ? 'YYYYYY-MM-DD[T]HH:mm:ss.SSS[Z]' : 'YYYYYY-MM-DD[T]HH:mm:ss.SSSZ');
     }
     if (isFunction(Date.prototype.toISOString)) {
         // native implementation is ~50x faster, use it when we can
-        return this.toDate().toISOString();
+        if (utc) {
+            return this.toDate().toISOString();
+        } else {
+            return new Date(this._d.valueOf()).toISOString().replace('Z', formatMoment(m, 'Z'));
+        }
     }
-    return formatMoment(m, 'YYYY-MM-DD[T]HH:mm:ss.SSS[Z]');
+    return formatMoment(m, utc ? 'YYYY-MM-DD[T]HH:mm:ss.SSS[Z]' : 'YYYY-MM-DD[T]HH:mm:ss.SSSZ');
 }
 
 /**
@@ -3725,7 +3732,7 @@ addRegexToken('Do', function (isStrict, locale) {
 
 addParseToken(['D', 'DD'], DATE);
 addParseToken('Do', function (input, array) {
-    array[DATE] = toInt(input.match(match1to2)[0], 10);
+    array[DATE] = toInt(input.match(match1to2)[0]);
 });
 
 // MOMENTS
@@ -4537,7 +4544,7 @@ addParseToken('x', function (input, array, config) {
 // Side effect imports
 
 
-hooks.version = '2.19.2';
+hooks.version = '2.20.1';
 
 setHookCallback(createLocal);
 
@@ -4569,22 +4576,35 @@ hooks.relativeTimeThreshold = getSetRelativeTimeThreshold;
 hooks.calendarFormat        = getCalendarFormat;
 hooks.prototype             = proto;
 
+// currently HTML5 input type only supports 24-hour formats
+hooks.HTML5_FMT = {
+    DATETIME_LOCAL: 'YYYY-MM-DDTHH:mm',             // <input type="datetime-local" />
+    DATETIME_LOCAL_SECONDS: 'YYYY-MM-DDTHH:mm:ss',  // <input type="datetime-local" step="1" />
+    DATETIME_LOCAL_MS: 'YYYY-MM-DDTHH:mm:ss.SSS',   // <input type="datetime-local" step="0.001" />
+    DATE: 'YYYY-MM-DD',                             // <input type="date" />
+    TIME: 'HH:mm',                                  // <input type="time" />
+    TIME_SECONDS: 'HH:mm:ss',                       // <input type="time" step="1" />
+    TIME_MS: 'HH:mm:ss.SSS',                        // <input type="time" step="0.001" />
+    WEEK: 'YYYY-[W]WW',                             // <input type="week" />
+    MONTH: 'YYYY-MM'                                // <input type="month" />
+};
+
 return hooks;
 
 })));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(412)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(415)(module)))
 
 /***/ }),
-/* 289 */
+/* 291 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PipesModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__bcoin__ = __webpack_require__(410);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__date__ = __webpack_require__(411);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__billstatus__ = __webpack_require__(414);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__bcoin__ = __webpack_require__(413);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__date__ = __webpack_require__(414);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__billstatus__ = __webpack_require__(417);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4611,7 +4631,7 @@ PipesModule = __decorate([
 //# sourceMappingURL=pipes.module.js.map
 
 /***/ }),
-/* 290 */
+/* 292 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -4619,7 +4639,7 @@ PipesModule = __decorate([
 //! author : Werner Mollentze : https://github.com/wernerm
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -4662,6 +4682,7 @@ var af = moment.defineLocale('af', {
         future : 'oor %s',
         past : '%s gelede',
         s : '\'n paar sekondes',
+        ss : '%d sekondes',
         m : '\'n minuut',
         mm : '%d minute',
         h : '\'n uur',
@@ -4689,7 +4710,7 @@ return af;
 
 
 /***/ }),
-/* 291 */
+/* 293 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -4699,7 +4720,7 @@ return af;
 //! author : forabi https://github.com/forabi
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -4751,18 +4772,18 @@ var pluralize = function (u) {
     };
 };
 var months = [
-    'كانون الثاني يناير',
-    'شباط فبراير',
-    'آذار مارس',
-    'نيسان أبريل',
-    'أيار مايو',
-    'حزيران يونيو',
-    'تموز يوليو',
-    'آب أغسطس',
-    'أيلول سبتمبر',
-    'تشرين الأول أكتوبر',
-    'تشرين الثاني نوفمبر',
-    'كانون الأول ديسمبر'
+    'يناير',
+    'فبراير',
+    'مارس',
+    'أبريل',
+    'مايو',
+    'يونيو',
+    'يوليو',
+    'أغسطس',
+    'سبتمبر',
+    'أكتوبر',
+    'نوفمبر',
+    'ديسمبر'
 ];
 
 var ar = moment.defineLocale('ar', {
@@ -4803,6 +4824,7 @@ var ar = moment.defineLocale('ar', {
         future : 'بعد %s',
         past : 'منذ %s',
         s : pluralize('s'),
+        ss : pluralize('s'),
         m : pluralize('m'),
         mm : pluralize('m'),
         h : pluralize('h'),
@@ -4836,7 +4858,7 @@ return ar;
 
 
 /***/ }),
-/* 292 */
+/* 294 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -4844,7 +4866,7 @@ return ar;
 //! author : Noureddine LOUAHEDJ : https://github.com/noureddineme
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -4877,6 +4899,7 @@ var arDz = moment.defineLocale('ar-dz', {
         future : 'في %s',
         past : 'منذ %s',
         s : 'ثوان',
+        ss : '%d ثانية',
         m : 'دقيقة',
         mm : '%d دقائق',
         h : 'ساعة',
@@ -4900,7 +4923,7 @@ return arDz;
 
 
 /***/ }),
-/* 293 */
+/* 295 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -4908,7 +4931,7 @@ return arDz;
 //! author : Nusret Parlak: https://github.com/nusretparlak
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -4941,6 +4964,7 @@ var arKw = moment.defineLocale('ar-kw', {
         future : 'في %s',
         past : 'منذ %s',
         s : 'ثوان',
+        ss : '%d ثانية',
         m : 'دقيقة',
         mm : '%d دقائق',
         h : 'ساعة',
@@ -4964,7 +4988,7 @@ return arKw;
 
 
 /***/ }),
-/* 294 */
+/* 296 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -4972,7 +4996,7 @@ return arKw;
 //! author : Ali Hmer: https://github.com/kikoanis
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -5064,6 +5088,7 @@ var arLy = moment.defineLocale('ar-ly', {
         future : 'بعد %s',
         past : 'منذ %s',
         s : pluralize('s'),
+        ss : pluralize('s'),
         m : pluralize('m'),
         mm : pluralize('m'),
         h : pluralize('h'),
@@ -5095,7 +5120,7 @@ return arLy;
 
 
 /***/ }),
-/* 295 */
+/* 297 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -5104,7 +5129,7 @@ return arLy;
 //! author : Abdel Said : https://github.com/abdelsaid
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -5137,6 +5162,7 @@ var arMa = moment.defineLocale('ar-ma', {
         future : 'في %s',
         past : 'منذ %s',
         s : 'ثوان',
+        ss : '%d ثانية',
         m : 'دقيقة',
         mm : '%d دقائق',
         h : 'ساعة',
@@ -5160,7 +5186,7 @@ return arMa;
 
 
 /***/ }),
-/* 296 */
+/* 298 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -5168,7 +5194,7 @@ return arMa;
 //! author : Suhail Alkowaileet : https://github.com/xsoh
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -5237,6 +5263,7 @@ var arSa = moment.defineLocale('ar-sa', {
         future : 'في %s',
         past : 'منذ %s',
         s : 'ثوان',
+        ss : '%d ثانية',
         m : 'دقيقة',
         mm : '%d دقائق',
         h : 'ساعة',
@@ -5270,7 +5297,7 @@ return arSa;
 
 
 /***/ }),
-/* 297 */
+/* 299 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -5278,7 +5305,7 @@ return arSa;
 //! author : Nader Toukabri : https://github.com/naderio
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -5311,6 +5338,7 @@ var arTn = moment.defineLocale('ar-tn', {
         future: 'في %s',
         past: 'منذ %s',
         s: 'ثوان',
+        ss : '%d ثانية',
         m: 'دقيقة',
         mm: '%d دقائق',
         h: 'ساعة',
@@ -5334,7 +5362,7 @@ return arTn;
 
 
 /***/ }),
-/* 298 */
+/* 300 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -5342,7 +5370,7 @@ return arTn;
 //! author : topchiyev : https://github.com/topchiyev
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -5396,6 +5424,7 @@ var az = moment.defineLocale('az', {
         future : '%s sonra',
         past : '%s əvvəl',
         s : 'birneçə saniyyə',
+        ss : '%d saniyə',
         m : 'bir dəqiqə',
         mm : '%d dəqiqə',
         h : 'bir saat',
@@ -5444,7 +5473,7 @@ return az;
 
 
 /***/ }),
-/* 299 */
+/* 301 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -5454,7 +5483,7 @@ return az;
 //! Author : Menelion Elensúle : https://github.com/Oire
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -5466,6 +5495,7 @@ function plural(word, num) {
 }
 function relativeTimeWithPlural(number, withoutSuffix, key) {
     var format = {
+        'ss': withoutSuffix ? 'секунда_секунды_секунд' : 'секунду_секунды_секунд',
         'mm': withoutSuffix ? 'хвіліна_хвіліны_хвілін' : 'хвіліну_хвіліны_хвілін',
         'hh': withoutSuffix ? 'гадзіна_гадзіны_гадзін' : 'гадзіну_гадзіны_гадзін',
         'dd': 'дзень_дні_дзён',
@@ -5583,7 +5613,7 @@ return be;
 
 
 /***/ }),
-/* 300 */
+/* 302 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -5591,7 +5621,7 @@ return be;
 //! author : Krasen Borisov : https://github.com/kraz
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -5635,6 +5665,7 @@ var bg = moment.defineLocale('bg', {
         future : 'след %s',
         past : 'преди %s',
         s : 'няколко секунди',
+        ss : '%d секунди',
         m : 'минута',
         mm : '%d минути',
         h : 'час',
@@ -5678,7 +5709,7 @@ return bg;
 
 
 /***/ }),
-/* 301 */
+/* 303 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -5686,7 +5717,7 @@ return bg;
 //! author : Estelle Comment : https://github.com/estellecomment
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -5719,6 +5750,7 @@ var bm = moment.defineLocale('bm', {
         future : '%s kɔnɔ',
         past : 'a bɛ %s bɔ',
         s : 'sanga dama dama',
+        ss : 'sekondi %d',
         m : 'miniti kelen',
         mm : 'miniti %d',
         h : 'lɛrɛ kelen',
@@ -5742,7 +5774,7 @@ return bm;
 
 
 /***/ }),
-/* 302 */
+/* 304 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -5750,7 +5782,7 @@ return bm;
 //! author : Kaushik Gandhi : https://github.com/kaushikgandhi
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -5807,6 +5839,7 @@ var bn = moment.defineLocale('bn', {
         future : '%s পরে',
         past : '%s আগে',
         s : 'কয়েক সেকেন্ড',
+        ss : '%d সেকেন্ড',
         m : 'এক মিনিট',
         mm : '%d মিনিট',
         h : 'এক ঘন্টা',
@@ -5866,7 +5899,7 @@ return bn;
 
 
 /***/ }),
-/* 303 */
+/* 305 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -5874,7 +5907,7 @@ return bn;
 //! author : Thupten N. Chakrishar : https://github.com/vajradog
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -5931,6 +5964,7 @@ var bo = moment.defineLocale('bo', {
         future : '%s ལ་',
         past : '%s སྔན་ལ',
         s : 'ལམ་སང',
+        ss : '%d སྐར་ཆ།',
         m : 'སྐར་མ་གཅིག',
         mm : '%d སྐར་མ',
         h : 'ཆུ་ཚོད་གཅིག',
@@ -5990,7 +6024,7 @@ return bo;
 
 
 /***/ }),
-/* 304 */
+/* 306 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -5998,7 +6032,7 @@ return bo;
 //! author : Jean-Baptiste Le Duigou : https://github.com/jbleduigou
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -6075,6 +6109,7 @@ var br = moment.defineLocale('br', {
         future : 'a-benn %s',
         past : '%s \'zo',
         s : 'un nebeud segondennoù',
+        ss : '%d eilenn',
         m : 'ur vunutenn',
         mm : relativeTimeWithMutation,
         h : 'un eur',
@@ -6103,7 +6138,7 @@ return br;
 
 
 /***/ }),
-/* 305 */
+/* 307 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -6112,7 +6147,7 @@ return br;
 //! based on (hr) translation by Bojan Marković
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -6121,6 +6156,15 @@ return br;
 function translate(number, withoutSuffix, key) {
     var result = number + ' ';
     switch (key) {
+        case 'ss':
+            if (number === 1) {
+                result += 'sekunda';
+            } else if (number === 2 || number === 3 || number === 4) {
+                result += 'sekunde';
+            } else {
+                result += 'sekundi';
+            }
+            return result;
         case 'm':
             return withoutSuffix ? 'jedna minuta' : 'jedne minute';
         case 'mm':
@@ -6226,6 +6270,7 @@ var bs = moment.defineLocale('bs', {
         future : 'za %s',
         past   : 'prije %s',
         s      : 'par sekundi',
+        ss     : translate,
         m      : translate,
         mm     : translate,
         h      : translate,
@@ -6251,7 +6296,7 @@ return bs;
 
 
 /***/ }),
-/* 306 */
+/* 308 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -6259,7 +6304,7 @@ return bs;
 //! author : Juan G. Hurtado : https://github.com/juanghurtado
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -6310,6 +6355,7 @@ var ca = moment.defineLocale('ca', {
         future : 'd\'aquí %s',
         past : 'fa %s',
         s : 'uns segons',
+        ss : '%d segons',
         m : 'un minut',
         mm : '%d minuts',
         h : 'una hora',
@@ -6344,7 +6390,7 @@ return ca;
 
 
 /***/ }),
-/* 307 */
+/* 309 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -6352,7 +6398,7 @@ return ca;
 //! author : petrbela : https://github.com/petrbela
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -6368,6 +6414,13 @@ function translate(number, withoutSuffix, key, isFuture) {
     switch (key) {
         case 's':  // a few seconds / in a few seconds / a few seconds ago
             return (withoutSuffix || isFuture) ? 'pár sekund' : 'pár sekundami';
+        case 'ss': // 9 seconds / in 9 seconds / 9 seconds ago
+            if (withoutSuffix || isFuture) {
+                return result + (plural(number) ? 'sekundy' : 'sekund');
+            } else {
+                return result + 'sekundami';
+            }
+            break;
         case 'm':  // a minute / in a minute / a minute ago
             return withoutSuffix ? 'minuta' : (isFuture ? 'minutu' : 'minutou');
         case 'mm': // 9 minutes / in 9 minutes / 9 minutes ago
@@ -6496,6 +6549,7 @@ var cs = moment.defineLocale('cs', {
         future : 'za %s',
         past : 'před %s',
         s : translate,
+        ss : translate,
         m : translate,
         mm : translate,
         h : translate,
@@ -6521,7 +6575,7 @@ return cs;
 
 
 /***/ }),
-/* 308 */
+/* 310 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -6529,7 +6583,7 @@ return cs;
 //! author : Anatoly Mironov : https://github.com/mirontoli
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -6564,6 +6618,7 @@ var cv = moment.defineLocale('cv', {
         },
         past : '%s каялла',
         s : 'пӗр-ик ҫеккунт',
+        ss : '%d ҫеккунт',
         m : 'пӗр минут',
         mm : '%d минут',
         h : 'пӗр сехет',
@@ -6589,7 +6644,7 @@ return cv;
 
 
 /***/ }),
-/* 309 */
+/* 311 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -6598,7 +6653,7 @@ return cv;
 //! author : https://github.com/ryangreaves
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -6632,6 +6687,7 @@ var cy = moment.defineLocale('cy', {
         future: 'mewn %s',
         past: '%s yn ôl',
         s: 'ychydig eiliadau',
+        ss: '%d eiliad',
         m: 'munud',
         mm: '%d munud',
         h: 'awr',
@@ -6675,7 +6731,7 @@ return cy;
 
 
 /***/ }),
-/* 310 */
+/* 312 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -6683,7 +6739,7 @@ return cy;
 //! author : Ulrik Nielsen : https://github.com/mrbase
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -6715,6 +6771,7 @@ var da = moment.defineLocale('da', {
         future : 'om %s',
         past : '%s siden',
         s : 'få sekunder',
+        ss : '%d sekunder',
         m : 'et minut',
         mm : '%d minutter',
         h : 'en time',
@@ -6740,7 +6797,7 @@ return da;
 
 
 /***/ }),
-/* 311 */
+/* 313 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -6750,7 +6807,7 @@ return da;
 //! author : Mikolaj Dadela : https://github.com/mik01aj
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -6798,6 +6855,7 @@ var de = moment.defineLocale('de', {
         future : 'in %s',
         past : 'vor %s',
         s : 'ein paar Sekunden',
+        ss : '%d Sekunden',
         m : processRelativeTime,
         mm : '%d Minuten',
         h : processRelativeTime,
@@ -6823,7 +6881,7 @@ return de;
 
 
 /***/ }),
-/* 312 */
+/* 314 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -6834,7 +6892,7 @@ return de;
 //! author : Mikolaj Dadela : https://github.com/mik01aj
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -6882,6 +6940,7 @@ var deAt = moment.defineLocale('de-at', {
         future : 'in %s',
         past : 'vor %s',
         s : 'ein paar Sekunden',
+        ss : '%d Sekunden',
         m : processRelativeTime,
         mm : '%d Minuten',
         h : processRelativeTime,
@@ -6907,7 +6966,7 @@ return deAt;
 
 
 /***/ }),
-/* 313 */
+/* 315 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -6915,7 +6974,7 @@ return deAt;
 //! author : sschueller : https://github.com/sschueller
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -6946,12 +7005,12 @@ var deCh = moment.defineLocale('de-ch', {
     weekdaysMin : 'So_Mo_Di_Mi_Do_Fr_Sa'.split('_'),
     weekdaysParseExact : true,
     longDateFormat : {
-        LT: 'HH.mm',
-        LTS: 'HH.mm.ss',
+        LT: 'HH:mm',
+        LTS: 'HH:mm:ss',
         L : 'DD.MM.YYYY',
         LL : 'D. MMMM YYYY',
-        LLL : 'D. MMMM YYYY HH.mm',
-        LLLL : 'dddd, D. MMMM YYYY HH.mm'
+        LLL : 'D. MMMM YYYY HH:mm',
+        LLLL : 'dddd, D. MMMM YYYY HH:mm'
     },
     calendar : {
         sameDay: '[heute um] LT [Uhr]',
@@ -6965,6 +7024,7 @@ var deCh = moment.defineLocale('de-ch', {
         future : 'in %s',
         past : 'vor %s',
         s : 'ein paar Sekunden',
+        ss : '%d Sekunden',
         m : processRelativeTime,
         mm : '%d Minuten',
         h : processRelativeTime,
@@ -6990,7 +7050,7 @@ return deCh;
 
 
 /***/ }),
-/* 314 */
+/* 316 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -6998,7 +7058,7 @@ return deCh;
 //! author : Jawish Hameed : https://github.com/jawish
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -7066,6 +7126,7 @@ var dv = moment.defineLocale('dv', {
         future : 'ތެރޭގައި %s',
         past : 'ކުރިން %s',
         s : 'ސިކުންތުކޮޅެއް',
+        ss : 'd% ސިކުންތު',
         m : 'މިނިޓެއް',
         mm : 'މިނިޓު %d',
         h : 'ގަޑިއިރެއް',
@@ -7095,7 +7156,7 @@ return dv;
 
 
 /***/ }),
-/* 315 */
+/* 317 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -7103,7 +7164,7 @@ return dv;
 //! author : Aggelos Karalias : https://github.com/mehiel
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -7175,6 +7236,7 @@ var el = moment.defineLocale('el', {
         future : 'σε %s',
         past : '%s πριν',
         s : 'λίγα δευτερόλεπτα',
+        ss : '%d δευτερόλεπτα',
         m : 'ένα λεπτό',
         mm : '%d λεπτά',
         h : 'μία ώρα',
@@ -7200,7 +7262,7 @@ return el;
 
 
 /***/ }),
-/* 316 */
+/* 318 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -7208,7 +7270,7 @@ return el;
 //! author : Jared Morse : https://github.com/jarcoal
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -7240,6 +7302,7 @@ var enAu = moment.defineLocale('en-au', {
         future : 'in %s',
         past : '%s ago',
         s : 'a few seconds',
+        ss : '%d seconds',
         m : 'a minute',
         mm : '%d minutes',
         h : 'an hour',
@@ -7272,7 +7335,7 @@ return enAu;
 
 
 /***/ }),
-/* 317 */
+/* 319 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -7280,7 +7343,7 @@ return enAu;
 //! author : Jonathan Abourbih : https://github.com/jonbca
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -7312,6 +7375,7 @@ var enCa = moment.defineLocale('en-ca', {
         future : 'in %s',
         past : '%s ago',
         s : 'a few seconds',
+        ss : '%d seconds',
         m : 'a minute',
         mm : '%d minutes',
         h : 'an hour',
@@ -7340,7 +7404,7 @@ return enCa;
 
 
 /***/ }),
-/* 318 */
+/* 320 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -7348,7 +7412,7 @@ return enCa;
 //! author : Chris Gedrim : https://github.com/chrisgedrim
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -7380,6 +7444,7 @@ var enGb = moment.defineLocale('en-gb', {
         future : 'in %s',
         past : '%s ago',
         s : 'a few seconds',
+        ss : '%d seconds',
         m : 'a minute',
         mm : '%d minutes',
         h : 'an hour',
@@ -7412,7 +7477,7 @@ return enGb;
 
 
 /***/ }),
-/* 319 */
+/* 321 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -7420,7 +7485,7 @@ return enGb;
 //! author : Chris Cartlidge : https://github.com/chriscartlidge
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -7452,6 +7517,7 @@ var enIe = moment.defineLocale('en-ie', {
         future : 'in %s',
         past : '%s ago',
         s : 'a few seconds',
+        ss : '%d seconds',
         m : 'a minute',
         mm : '%d minutes',
         h : 'an hour',
@@ -7484,7 +7550,7 @@ return enIe;
 
 
 /***/ }),
-/* 320 */
+/* 322 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -7492,7 +7558,7 @@ return enIe;
 //! author : Luke McGregor : https://github.com/lukemcgregor
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -7524,6 +7590,7 @@ var enNz = moment.defineLocale('en-nz', {
         future : 'in %s',
         past : '%s ago',
         s : 'a few seconds',
+        ss : '%d seconds',
         m : 'a minute',
         mm : '%d minutes',
         h : 'an hour',
@@ -7556,7 +7623,7 @@ return enNz;
 
 
 /***/ }),
-/* 321 */
+/* 323 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -7566,7 +7633,7 @@ return enNz;
 //! comment : miestasmia corrected the translation by colindean
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -7609,6 +7676,7 @@ var eo = moment.defineLocale('eo', {
         future : 'post %s',
         past : 'antaŭ %s',
         s : 'sekundoj',
+        ss : '%d sekundoj',
         m : 'minuto',
         mm : '%d minutoj',
         h : 'horo',
@@ -7634,7 +7702,7 @@ return eo;
 
 
 /***/ }),
-/* 322 */
+/* 324 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -7642,7 +7710,7 @@ return eo;
 //! author : Julio Napurí : https://github.com/julionc
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -7706,6 +7774,7 @@ var es = moment.defineLocale('es', {
         future : 'en %s',
         past : 'hace %s',
         s : 'unos segundos',
+        ss : '%d segundos',
         m : 'un minuto',
         mm : '%d minutos',
         h : 'una hora',
@@ -7731,14 +7800,14 @@ return es;
 
 
 /***/ }),
-/* 323 */
+/* 325 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 //! locale : Spanish (Dominican Republic) [es-do]
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -7802,6 +7871,7 @@ var esDo = moment.defineLocale('es-do', {
         future : 'en %s',
         past : 'hace %s',
         s : 'unos segundos',
+        ss : '%d segundos',
         m : 'un minuto',
         mm : '%d minutos',
         h : 'una hora',
@@ -7827,15 +7897,15 @@ return esDo;
 
 
 /***/ }),
-/* 324 */
+/* 326 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
-//! locale : Spanish(United State) [es-us]
+//! locale : Spanish (United States) [es-us]
 //! author : bustta : https://github.com/bustta
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -7861,12 +7931,12 @@ var esUs = moment.defineLocale('es-us', {
     weekdaysMin : 'do_lu_ma_mi_ju_vi_sá'.split('_'),
     weekdaysParseExact : true,
     longDateFormat : {
-        LT : 'H:mm',
-        LTS : 'H:mm:ss',
+        LT : 'h:mm A',
+        LTS : 'h:mm:ss A',
         L : 'MM/DD/YYYY',
         LL : 'MMMM [de] D [de] YYYY',
-        LLL : 'MMMM [de] D [de] YYYY H:mm',
-        LLLL : 'dddd, MMMM [de] D [de] YYYY H:mm'
+        LLL : 'MMMM [de] D [de] YYYY h:mm A',
+        LLLL : 'dddd, MMMM [de] D [de] YYYY h:mm A'
     },
     calendar : {
         sameDay : function () {
@@ -7890,6 +7960,7 @@ var esUs = moment.defineLocale('es-us', {
         future : 'en %s',
         past : 'hace %s',
         s : 'unos segundos',
+        ss : '%d segundos',
         m : 'un minuto',
         mm : '%d minutos',
         h : 'una hora',
@@ -7915,7 +7986,7 @@ return esUs;
 
 
 /***/ }),
-/* 325 */
+/* 327 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -7924,7 +7995,7 @@ return esUs;
 //! improvements : Illimar Tambek : https://github.com/ragulka
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -7933,6 +8004,7 @@ return esUs;
 function processRelativeTime(number, withoutSuffix, key, isFuture) {
     var format = {
         's' : ['mõne sekundi', 'mõni sekund', 'paar sekundit'],
+        'ss': [number + 'sekundi', number + 'sekundit'],
         'm' : ['ühe minuti', 'üks minut'],
         'mm': [number + ' minuti', number + ' minutit'],
         'h' : ['ühe tunni', 'tund aega', 'üks tund'],
@@ -7975,6 +8047,7 @@ var et = moment.defineLocale('et', {
         future : '%s pärast',
         past   : '%s tagasi',
         s      : processRelativeTime,
+        ss     : processRelativeTime,
         m      : processRelativeTime,
         mm     : processRelativeTime,
         h      : processRelativeTime,
@@ -8000,7 +8073,7 @@ return et;
 
 
 /***/ }),
-/* 326 */
+/* 328 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8008,7 +8081,7 @@ return et;
 //! author : Eneko Illarramendi : https://github.com/eillarra
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -8046,6 +8119,7 @@ var eu = moment.defineLocale('eu', {
         future : '%s barru',
         past : 'duela %s',
         s : 'segundo batzuk',
+        ss : '%d segundo',
         m : 'minutu bat',
         mm : '%d minutu',
         h : 'ordu bat',
@@ -8071,7 +8145,7 @@ return eu;
 
 
 /***/ }),
-/* 327 */
+/* 329 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8079,7 +8153,7 @@ return eu;
 //! author : Ebrahim Byagowi : https://github.com/ebraminio
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -8148,6 +8222,7 @@ var fa = moment.defineLocale('fa', {
         future : 'در %s',
         past : '%s پیش',
         s : 'چند ثانیه',
+        ss : 'ثانیه d%',
         m : 'یک دقیقه',
         mm : '%d دقیقه',
         h : 'یک ساعت',
@@ -8183,7 +8258,7 @@ return fa;
 
 
 /***/ }),
-/* 328 */
+/* 330 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8191,7 +8266,7 @@ return fa;
 //! author : Tarmo Aidantausta : https://github.com/bleadof
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -8207,6 +8282,8 @@ function translate(number, withoutSuffix, key, isFuture) {
     switch (key) {
         case 's':
             return isFuture ? 'muutaman sekunnin' : 'muutama sekunti';
+        case 'ss':
+            return isFuture ? 'sekunnin' : 'sekuntia';
         case 'm':
             return isFuture ? 'minuutin' : 'minuutti';
         case 'mm':
@@ -8270,6 +8347,7 @@ var fi = moment.defineLocale('fi', {
         future : '%s päästä',
         past : '%s sitten',
         s : translate,
+        ss : translate,
         m : translate,
         mm : translate,
         h : translate,
@@ -8295,7 +8373,7 @@ return fi;
 
 
 /***/ }),
-/* 329 */
+/* 331 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8303,7 +8381,7 @@ return fi;
 //! author : Ragnar Johannesen : https://github.com/ragnar123
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -8335,6 +8413,7 @@ var fo = moment.defineLocale('fo', {
         future : 'um %s',
         past : '%s síðani',
         s : 'fá sekund',
+        ss : '%d sekundir',
         m : 'ein minutt',
         mm : '%d minuttir',
         h : 'ein tími',
@@ -8360,7 +8439,7 @@ return fo;
 
 
 /***/ }),
-/* 330 */
+/* 332 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8368,7 +8447,7 @@ return fo;
 //! author : John Fischer : https://github.com/jfroffice
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -8380,7 +8459,7 @@ var fr = moment.defineLocale('fr', {
     monthsParseExact : true,
     weekdays : 'dimanche_lundi_mardi_mercredi_jeudi_vendredi_samedi'.split('_'),
     weekdaysShort : 'dim._lun._mar._mer._jeu._ven._sam.'.split('_'),
-    weekdaysMin : 'Di_Lu_Ma_Me_Je_Ve_Sa'.split('_'),
+    weekdaysMin : 'di_lu_ma_me_je_ve_sa'.split('_'),
     weekdaysParseExact : true,
     longDateFormat : {
         LT : 'HH:mm',
@@ -8402,6 +8481,7 @@ var fr = moment.defineLocale('fr', {
         future : 'dans %s',
         past : 'il y a %s',
         s : 'quelques secondes',
+        ss : '%d secondes',
         m : 'une minute',
         mm : '%d minutes',
         h : 'une heure',
@@ -8448,7 +8528,7 @@ return fr;
 
 
 /***/ }),
-/* 331 */
+/* 333 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8456,7 +8536,7 @@ return fr;
 //! author : Jonathan Abourbih : https://github.com/jonbca
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -8468,7 +8548,7 @@ var frCa = moment.defineLocale('fr-ca', {
     monthsParseExact : true,
     weekdays : 'dimanche_lundi_mardi_mercredi_jeudi_vendredi_samedi'.split('_'),
     weekdaysShort : 'dim._lun._mar._mer._jeu._ven._sam.'.split('_'),
-    weekdaysMin : 'Di_Lu_Ma_Me_Je_Ve_Sa'.split('_'),
+    weekdaysMin : 'di_lu_ma_me_je_ve_sa'.split('_'),
     weekdaysParseExact : true,
     longDateFormat : {
         LT : 'HH:mm',
@@ -8490,6 +8570,7 @@ var frCa = moment.defineLocale('fr-ca', {
         future : 'dans %s',
         past : 'il y a %s',
         s : 'quelques secondes',
+        ss : '%d secondes',
         m : 'une minute',
         mm : '%d minutes',
         h : 'une heure',
@@ -8527,7 +8608,7 @@ return frCa;
 
 
 /***/ }),
-/* 332 */
+/* 334 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8535,7 +8616,7 @@ return frCa;
 //! author : Gaspard Bucher : https://github.com/gaspard
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -8547,7 +8628,7 @@ var frCh = moment.defineLocale('fr-ch', {
     monthsParseExact : true,
     weekdays : 'dimanche_lundi_mardi_mercredi_jeudi_vendredi_samedi'.split('_'),
     weekdaysShort : 'dim._lun._mar._mer._jeu._ven._sam.'.split('_'),
-    weekdaysMin : 'Di_Lu_Ma_Me_Je_Ve_Sa'.split('_'),
+    weekdaysMin : 'di_lu_ma_me_je_ve_sa'.split('_'),
     weekdaysParseExact : true,
     longDateFormat : {
         LT : 'HH:mm',
@@ -8569,6 +8650,7 @@ var frCh = moment.defineLocale('fr-ch', {
         future : 'dans %s',
         past : 'il y a %s',
         s : 'quelques secondes',
+        ss : '%d secondes',
         m : 'une minute',
         mm : '%d minutes',
         h : 'une heure',
@@ -8610,7 +8692,7 @@ return frCh;
 
 
 /***/ }),
-/* 333 */
+/* 335 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8618,7 +8700,7 @@ return frCh;
 //! author : Robin van der Vliet : https://github.com/robin0van0der0v
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -8663,6 +8745,7 @@ var fy = moment.defineLocale('fy', {
         future : 'oer %s',
         past : '%s lyn',
         s : 'in pear sekonden',
+        ss : '%d sekonden',
         m : 'ien minút',
         mm : '%d minuten',
         h : 'ien oere',
@@ -8690,7 +8773,7 @@ return fy;
 
 
 /***/ }),
-/* 334 */
+/* 336 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8698,7 +8781,7 @@ return fy;
 //! author : Jon Ashdown : https://github.com/jonashdown
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -8743,6 +8826,7 @@ var gd = moment.defineLocale('gd', {
         future : 'ann an %s',
         past : 'bho chionn %s',
         s : 'beagan diogan',
+        ss : '%d diogan',
         m : 'mionaid',
         mm : '%d mionaidean',
         h : 'uair',
@@ -8771,7 +8855,7 @@ return gd;
 
 
 /***/ }),
-/* 335 */
+/* 337 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8779,7 +8863,7 @@ return gd;
 //! author : Juan G. Hurtado : https://github.com/juanghurtado
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -8828,6 +8912,7 @@ var gl = moment.defineLocale('gl', {
         },
         past : 'hai %s',
         s : 'uns segundos',
+        ss : '%d segundos',
         m : 'un minuto',
         mm : '%d minutos',
         h : 'unha hora',
@@ -8853,7 +8938,7 @@ return gl;
 
 
 /***/ }),
-/* 336 */
+/* 338 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8861,7 +8946,7 @@ return gl;
 //! author : The Discoverer : https://github.com/WikiDiscoverer
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -8870,6 +8955,7 @@ return gl;
 function processRelativeTime(number, withoutSuffix, key, isFuture) {
     var format = {
         's': ['thodde secondanim', 'thodde second'],
+        'ss': [number + ' secondanim', number + ' second'],
         'm': ['eka mintan', 'ek minute'],
         'mm': [number + ' mintanim', number + ' mintam'],
         'h': ['eka horan', 'ek hor'],
@@ -8913,6 +8999,7 @@ var gomLatn = moment.defineLocale('gom-latn', {
         future : '%s',
         past : '%s adim',
         s : processRelativeTime,
+        ss : processRelativeTime,
         m : processRelativeTime,
         mm : processRelativeTime,
         h : processRelativeTime,
@@ -8980,7 +9067,7 @@ return gomLatn;
 
 
 /***/ }),
-/* 337 */
+/* 339 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8988,7 +9075,7 @@ return gomLatn;
 //! author : Kaushik Thanki : https://github.com/Kaushik1987
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -9046,6 +9133,7 @@ var gu = moment.defineLocale('gu', {
         future: '%s મા',
         past: '%s પેહલા',
         s: 'અમુક પળો',
+        ss: '%d સેકંડ',
         m: 'એક મિનિટ',
         mm: '%d મિનિટ',
         h: 'એક કલાક',
@@ -9109,7 +9197,7 @@ return gu;
 
 
 /***/ }),
-/* 338 */
+/* 340 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9119,7 +9207,7 @@ return gu;
 //! author : Tal Ater : https://github.com/TalAter
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -9155,6 +9243,7 @@ var he = moment.defineLocale('he', {
         future : 'בעוד %s',
         past : 'לפני %s',
         s : 'מספר שניות',
+        ss : '%d שניות',
         m : 'דקה',
         mm : '%d דקות',
         h : 'שעה',
@@ -9213,7 +9302,7 @@ return he;
 
 
 /***/ }),
-/* 339 */
+/* 341 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9221,7 +9310,7 @@ return he;
 //! author : Mayank Singhal : https://github.com/mayanksinghal
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -9279,6 +9368,7 @@ var hi = moment.defineLocale('hi', {
         future : '%s में',
         past : '%s पहले',
         s : 'कुछ ही क्षण',
+        ss : '%d सेकंड',
         m : 'एक मिनट',
         mm : '%d मिनट',
         h : 'एक घंटा',
@@ -9342,7 +9432,7 @@ return hi;
 
 
 /***/ }),
-/* 340 */
+/* 342 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9350,7 +9440,7 @@ return hi;
 //! author : Bojan Marković : https://github.com/bmarkovic
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -9359,6 +9449,15 @@ return hi;
 function translate(number, withoutSuffix, key) {
     var result = number + ' ';
     switch (key) {
+        case 'ss':
+            if (number === 1) {
+                result += 'sekunda';
+            } else if (number === 2 || number === 3 || number === 4) {
+                result += 'sekunde';
+            } else {
+                result += 'sekundi';
+            }
+            return result;
         case 'm':
             return withoutSuffix ? 'jedna minuta' : 'jedne minute';
         case 'mm':
@@ -9467,6 +9566,7 @@ var hr = moment.defineLocale('hr', {
         future : 'za %s',
         past   : 'prije %s',
         s      : 'par sekundi',
+        ss     : translate,
         m      : translate,
         mm     : translate,
         h      : translate,
@@ -9492,7 +9592,7 @@ return hr;
 
 
 /***/ }),
-/* 341 */
+/* 343 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9500,7 +9600,7 @@ return hr;
 //! author : Adam Brunner : https://github.com/adambrunner
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -9508,11 +9608,12 @@ return hr;
 
 var weekEndings = 'vasárnap hétfőn kedden szerdán csütörtökön pénteken szombaton'.split(' ');
 function translate(number, withoutSuffix, key, isFuture) {
-    var num = number,
-        suffix;
+    var num = number;
     switch (key) {
         case 's':
             return (isFuture || withoutSuffix) ? 'néhány másodperc' : 'néhány másodperce';
+        case 'ss':
+            return num + (isFuture || withoutSuffix) ? ' másodperc' : ' másodperce';
         case 'm':
             return 'egy' + (isFuture || withoutSuffix ? ' perc' : ' perce');
         case 'mm':
@@ -9581,6 +9682,7 @@ var hu = moment.defineLocale('hu', {
         future : '%s múlva',
         past : '%s',
         s : translate,
+        ss : translate,
         m : translate,
         mm : translate,
         h : translate,
@@ -9606,7 +9708,7 @@ return hu;
 
 
 /***/ }),
-/* 342 */
+/* 344 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9614,7 +9716,7 @@ return hu;
 //! author : Armendarabyan : https://github.com/armendarabyan
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -9653,6 +9755,7 @@ var hyAm = moment.defineLocale('hy-am', {
         future : '%s հետո',
         past : '%s առաջ',
         s : 'մի քանի վայրկյան',
+        ss : '%d վայրկյան',
         m : 'րոպե',
         mm : '%d րոպե',
         h : 'ժամ',
@@ -9706,7 +9809,7 @@ return hyAm;
 
 
 /***/ }),
-/* 343 */
+/* 345 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9715,7 +9818,7 @@ return hyAm;
 //! reference: http://id.wikisource.org/wiki/Pedoman_Umum_Ejaan_Bahasa_Indonesia_yang_Disempurnakan
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -9771,6 +9874,7 @@ var id = moment.defineLocale('id', {
         future : 'dalam %s',
         past : '%s yang lalu',
         s : 'beberapa detik',
+        ss : '%d detik',
         m : 'semenit',
         mm : '%d menit',
         h : 'sejam',
@@ -9794,7 +9898,7 @@ return id;
 
 
 /***/ }),
-/* 344 */
+/* 346 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9802,7 +9906,7 @@ return id;
 //! author : Hinrik Örn Sigurðsson : https://github.com/hinrik
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -9821,6 +9925,11 @@ function translate(number, withoutSuffix, key, isFuture) {
     switch (key) {
         case 's':
             return withoutSuffix || isFuture ? 'nokkrar sekúndur' : 'nokkrum sekúndum';
+        case 'ss':
+            if (plural(number)) {
+                return result + (withoutSuffix || isFuture ? 'sekúndur' : 'sekúndum');
+            }
+            return result + 'sekúnda';
         case 'm':
             return withoutSuffix ? 'mínúta' : 'mínútu';
         case 'mm':
@@ -9901,6 +10010,7 @@ var is = moment.defineLocale('is', {
         future : 'eftir %s',
         past : 'fyrir %s síðan',
         s : translate,
+        ss : translate,
         m : translate,
         mm : translate,
         h : 'klukkustund',
@@ -9926,7 +10036,7 @@ return is;
 
 
 /***/ }),
-/* 345 */
+/* 347 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9935,7 +10045,7 @@ return is;
 //! author: Mattia Larentis: https://github.com/nostalgiaz
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -9953,7 +10063,7 @@ var it = moment.defineLocale('it', {
         L : 'DD/MM/YYYY',
         LL : 'D MMMM YYYY',
         LLL : 'D MMMM YYYY HH:mm',
-        LLLL : 'dddd, D MMMM YYYY HH:mm'
+        LLLL : 'dddd D MMMM YYYY HH:mm'
     },
     calendar : {
         sameDay: '[Oggi alle] LT',
@@ -9976,6 +10086,7 @@ var it = moment.defineLocale('it', {
         },
         past : '%s fa',
         s : 'alcuni secondi',
+        ss : '%d secondi',
         m : 'un minuto',
         mm : '%d minuti',
         h : 'un\'ora',
@@ -10001,7 +10112,7 @@ return it;
 
 
 /***/ }),
-/* 346 */
+/* 348 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10009,7 +10120,7 @@ return it;
 //! author : LI Long : https://github.com/baryon
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -10067,6 +10178,7 @@ var ja = moment.defineLocale('ja', {
         future : '%s後',
         past : '%s前',
         s : '数秒',
+        ss : '%d秒',
         m : '1分',
         mm : '%d分',
         h : '1時間',
@@ -10086,7 +10198,7 @@ return ja;
 
 
 /***/ }),
-/* 347 */
+/* 349 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10095,7 +10207,7 @@ return ja;
 //! reference: http://jv.wikipedia.org/wiki/Basa_Jawa
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -10151,6 +10263,7 @@ var jv = moment.defineLocale('jv', {
         future : 'wonten ing %s',
         past : '%s ingkang kepengker',
         s : 'sawetawis detik',
+        ss : '%d detik',
         m : 'setunggal menit',
         mm : '%d menit',
         h : 'setunggal jam',
@@ -10174,7 +10287,7 @@ return jv;
 
 
 /***/ }),
-/* 348 */
+/* 350 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10182,7 +10295,7 @@ return jv;
 //! author : Irakli Janiashvili : https://github.com/irakli-janiashvili
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -10232,6 +10345,7 @@ var ka = moment.defineLocale('ka', {
             }
         },
         s : 'რამდენიმე წამი',
+        ss : '%d წამი',
         m : 'წუთი',
         mm : '%d წუთი',
         h : 'საათი',
@@ -10268,7 +10382,7 @@ return ka;
 
 
 /***/ }),
-/* 349 */
+/* 351 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10276,7 +10390,7 @@ return ka;
 //! authors : Nurlan Rakhimzhanov : https://github.com/nurlan
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -10331,6 +10445,7 @@ var kk = moment.defineLocale('kk', {
         future : '%s ішінде',
         past : '%s бұрын',
         s : 'бірнеше секунд',
+        ss : '%d секунд',
         m : 'бір минут',
         mm : '%d минут',
         h : 'бір сағат',
@@ -10360,7 +10475,7 @@ return kk;
 
 
 /***/ }),
-/* 350 */
+/* 352 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10368,7 +10483,7 @@ return kk;
 //! author : Kruy Vanna : https://github.com/kruyvanna
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -10400,6 +10515,7 @@ var km = moment.defineLocale('km', {
         future: '%sទៀត',
         past: '%sមុន',
         s: 'ប៉ុន្មានវិនាទី',
+        ss: '%d វិនាទី',
         m: 'មួយនាទី',
         mm: '%d នាទី',
         h: 'មួយម៉ោង',
@@ -10423,7 +10539,7 @@ return km;
 
 
 /***/ }),
-/* 351 */
+/* 353 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10431,7 +10547,7 @@ return km;
 //! author : Rajeev Naik : https://github.com/rajeevnaikte
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -10489,6 +10605,7 @@ var kn = moment.defineLocale('kn', {
         future : '%s ನಂತರ',
         past : '%s ಹಿಂದೆ',
         s : 'ಕೆಲವು ಕ್ಷಣಗಳು',
+        ss : '%d ಸೆಕೆಂಡುಗಳು',
         m : 'ಒಂದು ನಿಮಿಷ',
         mm : '%d ನಿಮಿಷ',
         h : 'ಒಂದು ಗಂಟೆ',
@@ -10554,7 +10671,7 @@ return kn;
 
 
 /***/ }),
-/* 352 */
+/* 354 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10563,7 +10680,7 @@ return kn;
 //! author : Jeeeyul Lee <jeeeyul@gmail.com>
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -10642,7 +10759,7 @@ return ko;
 
 
 /***/ }),
-/* 353 */
+/* 355 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10650,7 +10767,7 @@ return ko;
 //! author : Chyngyz Arystan uulu : https://github.com/chyngyz
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -10706,6 +10823,7 @@ var ky = moment.defineLocale('ky', {
         future : '%s ичинде',
         past : '%s мурун',
         s : 'бирнече секунд',
+        ss : '%d секунд',
         m : 'бир мүнөт',
         mm : '%d мүнөт',
         h : 'бир саат',
@@ -10735,7 +10853,7 @@ return ky;
 
 
 /***/ }),
-/* 354 */
+/* 356 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10744,7 +10862,7 @@ return ky;
 //! author : David Raison : https://github.com/kwisatz
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -10852,6 +10970,7 @@ var lb = moment.defineLocale('lb', {
         future : processFutureTime,
         past : processPastTime,
         s : 'e puer Sekonnen',
+        ss : '%d Sekonnen',
         m : processRelativeTime,
         mm : '%d Minutten',
         h : processRelativeTime,
@@ -10877,7 +10996,7 @@ return lb;
 
 
 /***/ }),
-/* 355 */
+/* 357 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10885,7 +11004,7 @@ return lb;
 //! author : Ryan Hart : https://github.com/ryanhart2
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -10929,6 +11048,7 @@ var lo = moment.defineLocale('lo', {
         future : 'ອີກ %s',
         past : '%sຜ່ານມາ',
         s : 'ບໍ່ເທົ່າໃດວິນາທີ',
+        ss : '%d ວິນາທີ' ,
         m : '1 ນາທີ',
         mm : '%d ນາທີ',
         h : '1 ຊົ່ວໂມງ',
@@ -10952,7 +11072,7 @@ return lo;
 
 
 /***/ }),
-/* 356 */
+/* 358 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10960,13 +11080,14 @@ return lo;
 //! author : Mindaugas Mozūras : https://github.com/mmozuras
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
 
 
 var units = {
+    'ss' : 'sekundė_sekundžių_sekundes',
     'm' : 'minutė_minutės_minutę',
     'mm': 'minutės_minučių_minutes',
     'h' : 'valanda_valandos_valandą',
@@ -11047,6 +11168,7 @@ var lt = moment.defineLocale('lt', {
         future : 'po %s',
         past : 'prieš %s',
         s : translateSeconds,
+        ss : translate,
         m : translateSingular,
         mm : translate,
         h : translateSingular,
@@ -11074,7 +11196,7 @@ return lt;
 
 
 /***/ }),
-/* 357 */
+/* 359 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11083,13 +11205,14 @@ return lt;
 //! author : Jānis Elmeris : https://github.com/JanisE
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
 
 
 var units = {
+    'ss': 'sekundes_sekundēm_sekunde_sekundes'.split('_'),
     'm': 'minūtes_minūtēm_minūte_minūtes'.split('_'),
     'mm': 'minūtes_minūtēm_minūte_minūtes'.split('_'),
     'h': 'stundas_stundām_stunda_stundas'.split('_'),
@@ -11151,6 +11274,7 @@ var lv = moment.defineLocale('lv', {
         future : 'pēc %s',
         past : 'pirms %s',
         s : relativeSeconds,
+        ss : relativeTimeWithPlural,
         m : relativeTimeWithSingular,
         mm : relativeTimeWithPlural,
         h : relativeTimeWithSingular,
@@ -11176,7 +11300,7 @@ return lv;
 
 
 /***/ }),
-/* 358 */
+/* 360 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11184,7 +11308,7 @@ return lv;
 //! author : Miodrag Nikač <miodrag@restartit.me> : https://github.com/miodragnikac
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -11192,6 +11316,7 @@ return lv;
 
 var translator = {
     words: { //Different grammatical cases
+        ss: ['sekund', 'sekunda', 'sekundi'],
         m: ['jedan minut', 'jednog minuta'],
         mm: ['minut', 'minuta', 'minuta'],
         h: ['jedan sat', 'jednog sata'],
@@ -11267,6 +11392,7 @@ var me = moment.defineLocale('me', {
         future : 'za %s',
         past   : 'prije %s',
         s      : 'nekoliko sekundi',
+        ss     : translator.translate,
         m      : translator.translate,
         mm     : translator.translate,
         h      : translator.translate,
@@ -11292,7 +11418,7 @@ return me;
 
 
 /***/ }),
-/* 359 */
+/* 361 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11300,7 +11426,7 @@ return me;
 //! author : John Corrigan <robbiecloset@gmail.com> : https://github.com/johnideal
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -11336,6 +11462,7 @@ var mi = moment.defineLocale('mi', {
         future: 'i roto i %s',
         past: '%s i mua',
         s: 'te hēkona ruarua',
+        ss: '%d hēkona',
         m: 'he meneti',
         mm: '%d meneti',
         h: 'te haora',
@@ -11361,7 +11488,7 @@ return mi;
 
 
 /***/ }),
-/* 360 */
+/* 362 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11369,7 +11496,7 @@ return mi;
 //! author : Borislav Mickov : https://github.com/B0k0
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -11413,6 +11540,7 @@ var mk = moment.defineLocale('mk', {
         future : 'после %s',
         past : 'пред %s',
         s : 'неколку секунди',
+        ss : '%d секунди',
         m : 'минута',
         mm : '%d минути',
         h : 'час',
@@ -11456,7 +11584,7 @@ return mk;
 
 
 /***/ }),
-/* 361 */
+/* 363 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11464,7 +11592,7 @@ return mk;
 //! author : Floyd Pink : https://github.com/floydpink
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -11497,6 +11625,7 @@ var ml = moment.defineLocale('ml', {
         future : '%s കഴിഞ്ഞ്',
         past : '%s മുൻപ്',
         s : 'അൽപ നിമിഷങ്ങൾ',
+        ss : '%d സെക്കൻഡ്',
         m : 'ഒരു മിനിറ്റ്',
         mm : '%d മിനിറ്റ്',
         h : 'ഒരു മണിക്കൂർ',
@@ -11542,7 +11671,7 @@ return ml;
 
 
 /***/ }),
-/* 362 */
+/* 364 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11551,7 +11680,7 @@ return ml;
 //! author : Vivek Athalye : https://github.com/vnathalye
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -11588,6 +11717,7 @@ function relativeTimeMr(number, withoutSuffix, string, isFuture)
     if (withoutSuffix) {
         switch (string) {
             case 's': output = 'काही सेकंद'; break;
+            case 'ss': output = '%d सेकंद'; break;
             case 'm': output = 'एक मिनिट'; break;
             case 'mm': output = '%d मिनिटे'; break;
             case 'h': output = 'एक तास'; break;
@@ -11603,6 +11733,7 @@ function relativeTimeMr(number, withoutSuffix, string, isFuture)
     else {
         switch (string) {
             case 's': output = 'काही सेकंदां'; break;
+            case 'ss': output = '%d सेकंदां'; break;
             case 'm': output = 'एका मिनिटा'; break;
             case 'mm': output = '%d मिनिटां'; break;
             case 'h': output = 'एका तासा'; break;
@@ -11645,6 +11776,7 @@ var mr = moment.defineLocale('mr', {
         future: '%sमध्ये',
         past: '%sपूर्वी',
         s: relativeTimeMr,
+        ss: relativeTimeMr,
         m: relativeTimeMr,
         mm: relativeTimeMr,
         h: relativeTimeMr,
@@ -11706,7 +11838,7 @@ return mr;
 
 
 /***/ }),
-/* 363 */
+/* 365 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11714,7 +11846,7 @@ return mr;
 //! author : Weldan Jamili : https://github.com/weldan
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -11770,6 +11902,7 @@ var ms = moment.defineLocale('ms', {
         future : 'dalam %s',
         past : '%s yang lepas',
         s : 'beberapa saat',
+        ss : '%d saat',
         m : 'seminit',
         mm : '%d minit',
         h : 'sejam',
@@ -11793,7 +11926,7 @@ return ms;
 
 
 /***/ }),
-/* 364 */
+/* 366 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11802,7 +11935,7 @@ return ms;
 //! author : Weldan Jamili : https://github.com/weldan
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -11858,6 +11991,7 @@ var msMy = moment.defineLocale('ms-my', {
         future : 'dalam %s',
         past : '%s yang lepas',
         s : 'beberapa saat',
+        ss : '%d saat',
         m : 'seminit',
         mm : '%d minit',
         h : 'sejam',
@@ -11881,7 +12015,73 @@ return msMy;
 
 
 /***/ }),
-/* 365 */
+/* 367 */
+/***/ (function(module, exports, __webpack_require__) {
+
+//! moment.js locale configuration
+//! locale : Maltese (Malta) [mt]
+//! author : Alessandro Maruccia : https://github.com/alesma
+
+;(function (global, factory) {
+    true ? factory(__webpack_require__(290)) :
+   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
+   factory(global.moment)
+}(this, (function (moment) { 'use strict';
+
+
+var mt = moment.defineLocale('mt', {
+    months : 'Jannar_Frar_Marzu_April_Mejju_Ġunju_Lulju_Awwissu_Settembru_Ottubru_Novembru_Diċembru'.split('_'),
+    monthsShort : 'Jan_Fra_Mar_Apr_Mej_Ġun_Lul_Aww_Set_Ott_Nov_Diċ'.split('_'),
+    weekdays : 'Il-Ħadd_It-Tnejn_It-Tlieta_L-Erbgħa_Il-Ħamis_Il-Ġimgħa_Is-Sibt'.split('_'),
+    weekdaysShort : 'Ħad_Tne_Tli_Erb_Ħam_Ġim_Sib'.split('_'),
+    weekdaysMin : 'Ħa_Tn_Tl_Er_Ħa_Ġi_Si'.split('_'),
+    longDateFormat : {
+        LT : 'HH:mm',
+        LTS : 'HH:mm:ss',
+        L : 'DD/MM/YYYY',
+        LL : 'D MMMM YYYY',
+        LLL : 'D MMMM YYYY HH:mm',
+        LLLL : 'dddd, D MMMM YYYY HH:mm'
+    },
+    calendar : {
+        sameDay : '[Illum fil-]LT',
+        nextDay : '[Għada fil-]LT',
+        nextWeek : 'dddd [fil-]LT',
+        lastDay : '[Il-bieraħ fil-]LT',
+        lastWeek : 'dddd [li għadda] [fil-]LT',
+        sameElse : 'L'
+    },
+    relativeTime : {
+        future : 'f’ %s',
+        past : '%s ilu',
+        s : 'ftit sekondi',
+        ss : '%d sekondi',
+        m : 'minuta',
+        mm : '%d minuti',
+        h : 'siegħa',
+        hh : '%d siegħat',
+        d : 'ġurnata',
+        dd : '%d ġranet',
+        M : 'xahar',
+        MM : '%d xhur',
+        y : 'sena',
+        yy : '%d sni'
+    },
+    dayOfMonthOrdinalParse : /\d{1,2}º/,
+    ordinal: '%dº',
+    week : {
+        dow : 1, // Monday is the first day of the week.
+        doy : 4  // The week that contains Jan 4th is the first week of the year.
+    }
+});
+
+return mt;
+
+})));
+
+
+/***/ }),
+/* 368 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11891,7 +12091,7 @@ return msMy;
 //! author : Tin Aung Lin : https://github.com/thanyawzinmin
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -11949,6 +12149,7 @@ var my = moment.defineLocale('my', {
         future: 'လာမည့် %s မှာ',
         past: 'လွန်ခဲ့သော %s က',
         s: 'စက္ကန်.အနည်းငယ်',
+        ss : '%d စက္ကန့်',
         m: 'တစ်မိနစ်',
         mm: '%d မိနစ်',
         h: 'တစ်နာရီ',
@@ -11982,7 +12183,7 @@ return my;
 
 
 /***/ }),
-/* 366 */
+/* 369 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11991,7 +12192,7 @@ return my;
 //!           Sigurd Gartmann : https://github.com/sigurdga
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -12025,6 +12226,7 @@ var nb = moment.defineLocale('nb', {
         future : 'om %s',
         past : '%s siden',
         s : 'noen sekunder',
+        ss : '%d sekunder',
         m : 'ett minutt',
         mm : '%d minutter',
         h : 'en time',
@@ -12050,7 +12252,7 @@ return nb;
 
 
 /***/ }),
-/* 367 */
+/* 370 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12058,7 +12260,7 @@ return nb;
 //! author : suvash : https://github.com/suvash
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -12155,6 +12357,7 @@ var ne = moment.defineLocale('ne', {
         future : '%sमा',
         past : '%s अगाडि',
         s : 'केही क्षण',
+        ss : '%d सेकेण्ड',
         m : 'एक मिनेट',
         mm : '%d मिनेट',
         h : 'एक घण्टा',
@@ -12178,7 +12381,7 @@ return ne;
 
 
 /***/ }),
-/* 368 */
+/* 371 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12187,7 +12390,7 @@ return ne;
 //! author : Jacob Middag : https://github.com/middagj
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -12244,6 +12447,7 @@ var nl = moment.defineLocale('nl', {
         future : 'over %s',
         past : '%s geleden',
         s : 'een paar seconden',
+        ss : '%d seconden',
         m : 'één minuut',
         mm : '%d minuten',
         h : 'één uur',
@@ -12271,7 +12475,7 @@ return nl;
 
 
 /***/ }),
-/* 369 */
+/* 372 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12280,7 +12484,7 @@ return nl;
 //! author : Jacob Middag : https://github.com/middagj
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -12337,6 +12541,7 @@ var nlBe = moment.defineLocale('nl-be', {
         future : 'over %s',
         past : '%s geleden',
         s : 'een paar seconden',
+        ss : '%d seconden',
         m : 'één minuut',
         mm : '%d minuten',
         h : 'één uur',
@@ -12364,7 +12569,7 @@ return nlBe;
 
 
 /***/ }),
-/* 370 */
+/* 373 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12372,7 +12577,7 @@ return nlBe;
 //! author : https://github.com/mechuwind
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -12404,6 +12609,7 @@ var nn = moment.defineLocale('nn', {
         future : 'om %s',
         past : '%s sidan',
         s : 'nokre sekund',
+        ss : '%d sekund',
         m : 'eit minutt',
         mm : '%d minutt',
         h : 'ein time',
@@ -12429,7 +12635,7 @@ return nn;
 
 
 /***/ }),
-/* 371 */
+/* 374 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12437,7 +12643,7 @@ return nn;
 //! author : Harpreet Singh : https://github.com/harpreetkhalsagtbit
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -12495,6 +12701,7 @@ var paIn = moment.defineLocale('pa-in', {
         future : '%s ਵਿੱਚ',
         past : '%s ਪਿਛਲੇ',
         s : 'ਕੁਝ ਸਕਿੰਟ',
+        ss : '%d ਸਕਿੰਟ',
         m : 'ਇਕ ਮਿੰਟ',
         mm : '%d ਮਿੰਟ',
         h : 'ਇੱਕ ਘੰਟਾ',
@@ -12558,7 +12765,7 @@ return paIn;
 
 
 /***/ }),
-/* 372 */
+/* 375 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12566,7 +12773,7 @@ return paIn;
 //! author : Rafal Hirsz : https://github.com/evoL
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -12580,6 +12787,8 @@ function plural(n) {
 function translate(number, withoutSuffix, key) {
     var result = number + ' ';
     switch (key) {
+        case 'ss':
+            return result + (plural(number) ? 'sekundy' : 'sekund');
         case 'm':
             return withoutSuffix ? 'minuta' : 'minutę';
         case 'mm':
@@ -12662,6 +12871,7 @@ var pl = moment.defineLocale('pl', {
         future : 'za %s',
         past : '%s temu',
         s : 'kilka sekund',
+        ss : translate,
         m : translate,
         mm : translate,
         h : translate,
@@ -12687,7 +12897,7 @@ return pl;
 
 
 /***/ }),
-/* 373 */
+/* 376 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12695,7 +12905,7 @@ return pl;
 //! author : Jefferson : https://github.com/jalex79
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -12732,6 +12942,7 @@ var pt = moment.defineLocale('pt', {
         future : 'em %s',
         past : 'há %s',
         s : 'segundos',
+        ss : '%d segundos',
         m : 'um minuto',
         mm : '%d minutos',
         h : 'uma hora',
@@ -12757,7 +12968,7 @@ return pt;
 
 
 /***/ }),
-/* 374 */
+/* 377 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12765,7 +12976,7 @@ return pt;
 //! author : Caio Ribeiro Pereira : https://github.com/caio-ribeiro-pereira
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -12824,7 +13035,7 @@ return ptBr;
 
 
 /***/ }),
-/* 375 */
+/* 378 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12833,7 +13044,7 @@ return ptBr;
 //! author : Valentin Agachi : https://github.com/avaly
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -12841,6 +13052,7 @@ return ptBr;
 
 function relativeTimeWithPlural(number, withoutSuffix, key) {
     var format = {
+            'ss': 'secunde',
             'mm': 'minute',
             'hh': 'ore',
             'dd': 'zile',
@@ -12881,6 +13093,7 @@ var ro = moment.defineLocale('ro', {
         future : 'peste %s',
         past : '%s în urmă',
         s : 'câteva secunde',
+        ss : relativeTimeWithPlural,
         m : 'un minut',
         mm : relativeTimeWithPlural,
         h : 'o oră',
@@ -12904,7 +13117,7 @@ return ro;
 
 
 /***/ }),
-/* 376 */
+/* 379 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12914,7 +13127,7 @@ return ro;
 //! author : Коренберг Марк : https://github.com/socketpair
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -12926,6 +13139,7 @@ function plural(word, num) {
 }
 function relativeTimeWithPlural(number, withoutSuffix, key) {
     var format = {
+        'ss': withoutSuffix ? 'секунда_секунды_секунд' : 'секунду_секунды_секунд',
         'mm': withoutSuffix ? 'минута_минуты_минут' : 'минуту_минуты_минут',
         'hh': 'час_часа_часов',
         'dd': 'день_дня_дней',
@@ -12977,12 +13191,12 @@ var ru = moment.defineLocale('ru', {
     // Выражение, которое соотвествует только сокращённым формам
     monthsShortStrictRegex: /^(янв\.|февр?\.|мар[т.]|апр\.|ма[яй]|июн[ья.]|июл[ья.]|авг\.|сент?\.|окт\.|нояб?\.|дек\.)/i,
     longDateFormat : {
-        LT : 'HH:mm',
-        LTS : 'HH:mm:ss',
+        LT : 'H:mm',
+        LTS : 'H:mm:ss',
         L : 'DD.MM.YYYY',
         LL : 'D MMMM YYYY г.',
-        LLL : 'D MMMM YYYY г., HH:mm',
-        LLLL : 'dddd, D MMMM YYYY г., HH:mm'
+        LLL : 'D MMMM YYYY г., H:mm',
+        LLLL : 'dddd, D MMMM YYYY г., H:mm'
     },
     calendar : {
         sameDay: '[Сегодня в] LT',
@@ -13038,6 +13252,7 @@ var ru = moment.defineLocale('ru', {
         future : 'через %s',
         past : '%s назад',
         s : 'несколько секунд',
+        ss : relativeTimeWithPlural,
         m : relativeTimeWithPlural,
         mm : relativeTimeWithPlural,
         h : 'час',
@@ -13092,7 +13307,7 @@ return ru;
 
 
 /***/ }),
-/* 377 */
+/* 380 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13100,7 +13315,7 @@ return ru;
 //! author : Narain Sagar : https://github.com/narainsagar
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -13166,6 +13381,7 @@ var sd = moment.defineLocale('sd', {
         future : '%s پوء',
         past : '%s اڳ',
         s : 'چند سيڪنڊ',
+        ss : '%d سيڪنڊ',
         m : 'هڪ منٽ',
         mm : '%d منٽ',
         h : 'هڪ ڪلاڪ',
@@ -13195,7 +13411,7 @@ return sd;
 
 
 /***/ }),
-/* 378 */
+/* 381 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13203,7 +13419,7 @@ return sd;
 //! authors : Bård Rolstad Henriksen : https://github.com/karamell
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -13236,6 +13452,7 @@ var se = moment.defineLocale('se', {
         future : '%s geažes',
         past : 'maŋit %s',
         s : 'moadde sekunddat',
+        ss: '%d sekunddat',
         m : 'okta minuhta',
         mm : '%d minuhtat',
         h : 'okta diimmu',
@@ -13261,7 +13478,7 @@ return se;
 
 
 /***/ }),
-/* 379 */
+/* 382 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13269,7 +13486,7 @@ return se;
 //! author : Sampath Sitinamaluwa : https://github.com/sampathsris
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -13303,6 +13520,7 @@ var si = moment.defineLocale('si', {
         future : '%sකින්',
         past : '%sකට පෙර',
         s : 'තත්පර කිහිපය',
+        ss : 'තත්පර %d',
         m : 'මිනිත්තුව',
         mm : 'මිනිත්තු %d',
         h : 'පැය',
@@ -13337,7 +13555,7 @@ return si;
 
 
 /***/ }),
-/* 380 */
+/* 383 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13346,7 +13564,7 @@ return si;
 //! based on work of petrbela : https://github.com/petrbela
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -13362,6 +13580,13 @@ function translate(number, withoutSuffix, key, isFuture) {
     switch (key) {
         case 's':  // a few seconds / in a few seconds / a few seconds ago
             return (withoutSuffix || isFuture) ? 'pár sekúnd' : 'pár sekundami';
+        case 'ss': // 9 seconds / in 9 seconds / 9 seconds ago
+            if (withoutSuffix || isFuture) {
+                return result + (plural(number) ? 'sekundy' : 'sekúnd');
+            } else {
+                return result + 'sekundami';
+            }
+            break;
         case 'm':  // a minute / in a minute / a minute ago
             return withoutSuffix ? 'minúta' : (isFuture ? 'minútu' : 'minútou');
         case 'mm': // 9 minutes / in 9 minutes / 9 minutes ago
@@ -13467,6 +13692,7 @@ var sk = moment.defineLocale('sk', {
         future : 'za %s',
         past : 'pred %s',
         s : translate,
+        ss : translate,
         m : translate,
         mm : translate,
         h : translate,
@@ -13492,7 +13718,7 @@ return sk;
 
 
 /***/ }),
-/* 381 */
+/* 384 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13500,7 +13726,7 @@ return sk;
 //! author : Robert Sedovšek : https://github.com/sedovsek
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -13511,6 +13737,17 @@ function processRelativeTime(number, withoutSuffix, key, isFuture) {
     switch (key) {
         case 's':
             return withoutSuffix || isFuture ? 'nekaj sekund' : 'nekaj sekundami';
+        case 'ss':
+            if (number === 1) {
+                result += withoutSuffix ? 'sekundo' : 'sekundi';
+            } else if (number === 2) {
+                result += withoutSuffix || isFuture ? 'sekundi' : 'sekundah';
+            } else if (number < 5) {
+                result += withoutSuffix || isFuture ? 'sekunde' : 'sekundah';
+            } else {
+                result += withoutSuffix || isFuture ? 'sekund' : 'sekund';
+            }
+            return result;
         case 'm':
             return withoutSuffix ? 'ena minuta' : 'eno minuto';
         case 'mm':
@@ -13634,6 +13871,7 @@ var sl = moment.defineLocale('sl', {
         future : 'čez %s',
         past   : 'pred %s',
         s      : processRelativeTime,
+        ss     : processRelativeTime,
         m      : processRelativeTime,
         mm     : processRelativeTime,
         h      : processRelativeTime,
@@ -13659,7 +13897,7 @@ return sl;
 
 
 /***/ }),
-/* 382 */
+/* 385 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13669,7 +13907,7 @@ return sl;
 //! author : Oerd Cukalla : https://github.com/oerd
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -13709,6 +13947,7 @@ var sq = moment.defineLocale('sq', {
         future : 'në %s',
         past : '%s më parë',
         s : 'disa sekonda',
+        ss : '%d sekonda',
         m : 'një minutë',
         mm : '%d minuta',
         h : 'një orë',
@@ -13734,7 +13973,7 @@ return sq;
 
 
 /***/ }),
-/* 383 */
+/* 386 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13742,7 +13981,7 @@ return sq;
 //! author : Milan Janačković<milanjanackovic@gmail.com> : https://github.com/milan-j
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -13750,6 +13989,7 @@ return sq;
 
 var translator = {
     words: { //Different grammatical cases
+        ss: ['sekunda', 'sekunde', 'sekundi'],
         m: ['jedan minut', 'jedne minute'],
         mm: ['minut', 'minute', 'minuta'],
         h: ['jedan sat', 'jednog sata'],
@@ -13824,6 +14064,7 @@ var sr = moment.defineLocale('sr', {
         future : 'za %s',
         past   : 'pre %s',
         s      : 'nekoliko sekundi',
+        ss     : translator.translate,
         m      : translator.translate,
         mm     : translator.translate,
         h      : translator.translate,
@@ -13849,7 +14090,7 @@ return sr;
 
 
 /***/ }),
-/* 384 */
+/* 387 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13857,7 +14098,7 @@ return sr;
 //! author : Milan Janačković<milanjanackovic@gmail.com> : https://github.com/milan-j
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -13865,6 +14106,7 @@ return sr;
 
 var translator = {
     words: { //Different grammatical cases
+        ss: ['секунда', 'секунде', 'секунди'],
         m: ['један минут', 'једне минуте'],
         mm: ['минут', 'минуте', 'минута'],
         h: ['један сат', 'једног сата'],
@@ -13939,6 +14181,7 @@ var srCyrl = moment.defineLocale('sr-cyrl', {
         future : 'за %s',
         past   : 'пре %s',
         s      : 'неколико секунди',
+        ss     : translator.translate,
         m      : translator.translate,
         mm     : translator.translate,
         h      : translator.translate,
@@ -13964,7 +14207,7 @@ return srCyrl;
 
 
 /***/ }),
-/* 385 */
+/* 388 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13972,7 +14215,7 @@ return srCyrl;
 //! author : Nicolai Davies<mail@nicolai.io> : https://github.com/nicolaidavies
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -14006,6 +14249,7 @@ var ss = moment.defineLocale('ss', {
         future : 'nga %s',
         past : 'wenteka nga %s',
         s : 'emizuzwana lomcane',
+        ss : '%d mzuzwana',
         m : 'umzuzu',
         mm : '%d emizuzu',
         h : 'lihora',
@@ -14058,7 +14302,7 @@ return ss;
 
 
 /***/ }),
-/* 386 */
+/* 389 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14066,7 +14310,7 @@ return ss;
 //! author : Jens Alm : https://github.com/ulmus
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -14100,6 +14344,7 @@ var sv = moment.defineLocale('sv', {
         future : 'om %s',
         past : 'för %s sedan',
         s : 'några sekunder',
+        ss : '%d sekunder',
         m : 'en minut',
         mm : '%d minuter',
         h : 'en timme',
@@ -14132,7 +14377,7 @@ return sv;
 
 
 /***/ }),
-/* 387 */
+/* 390 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14140,7 +14385,7 @@ return sv;
 //! author : Fahad Kassim : https://github.com/fadsel
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -14173,6 +14418,7 @@ var sw = moment.defineLocale('sw', {
         future : '%s baadaye',
         past : 'tokea %s',
         s : 'hivi punde',
+        ss : 'sekunde %d',
         m : 'dakika moja',
         mm : 'dakika %d',
         h : 'saa limoja',
@@ -14196,7 +14442,7 @@ return sw;
 
 
 /***/ }),
-/* 388 */
+/* 391 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14204,7 +14450,7 @@ return sw;
 //! author : Arjunkumar Krishnamoorthy : https://github.com/tk120404
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -14261,6 +14507,7 @@ var ta = moment.defineLocale('ta', {
         future : '%s இல்',
         past : '%s முன்',
         s : 'ஒரு சில விநாடிகள்',
+        ss : '%d விநாடிகள்',
         m : 'ஒரு நிமிடம்',
         mm : '%d நிமிடங்கள்',
         h : 'ஒரு மணி நேரம்',
@@ -14331,7 +14578,7 @@ return ta;
 
 
 /***/ }),
-/* 389 */
+/* 392 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14339,7 +14586,7 @@ return ta;
 //! author : Krishna Chaitanya Thota : https://github.com/kcthota
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -14372,6 +14619,7 @@ var te = moment.defineLocale('te', {
         future : '%s లో',
         past : '%s క్రితం',
         s : 'కొన్ని క్షణాలు',
+        ss : '%d సెకన్లు',
         m : 'ఒక నిమిషం',
         mm : '%d నిమిషాలు',
         h : 'ఒక గంట',
@@ -14425,7 +14673,7 @@ return te;
 
 
 /***/ }),
-/* 390 */
+/* 393 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14434,7 +14682,7 @@ return te;
 //! author : Onorio De J. Afonso : https://github.com/marobo
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -14466,6 +14714,7 @@ var tet = moment.defineLocale('tet', {
         future : 'iha %s',
         past : '%s liuba',
         s : 'minutu balun',
+        ss : 'minutu %d',
         m : 'minutu ida',
         mm : 'minutus %d',
         h : 'horas ida',
@@ -14498,7 +14747,7 @@ return tet;
 
 
 /***/ }),
-/* 391 */
+/* 394 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14506,7 +14755,7 @@ return tet;
 //! author : Kridsada Thanabulpong : https://github.com/sirn
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -14551,6 +14800,7 @@ var th = moment.defineLocale('th', {
         future : 'อีก %s',
         past : '%sที่แล้ว',
         s : 'ไม่กี่วินาที',
+        ss : '%d วินาที',
         m : '1 นาที',
         mm : '%d นาที',
         h : '1 ชั่วโมง',
@@ -14570,7 +14820,7 @@ return th;
 
 
 /***/ }),
-/* 392 */
+/* 395 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14578,7 +14828,7 @@ return th;
 //! author : Dan Hagman : https://github.com/hagmandan
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -14610,6 +14860,7 @@ var tlPh = moment.defineLocale('tl-ph', {
         future : 'sa loob ng %s',
         past : '%s ang nakalipas',
         s : 'ilang segundo',
+        ss : '%d segundo',
         m : 'isang minuto',
         mm : '%d minuto',
         h : 'isang oras',
@@ -14637,7 +14888,7 @@ return tlPh;
 
 
 /***/ }),
-/* 393 */
+/* 396 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14645,7 +14896,7 @@ return tlPh;
 //! author : Dominika Kruk : https://github.com/amaranthrose
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -14680,6 +14931,8 @@ function translatePast(output) {
 function translate(number, withoutSuffix, string, isFuture) {
     var numberNoun = numberAsNoun(number);
     switch (string) {
+        case 'ss':
+            return numberNoun + ' lup';
         case 'mm':
             return numberNoun + ' tup';
         case 'hh':
@@ -14737,6 +14990,7 @@ var tlh = moment.defineLocale('tlh', {
         future : translateFuture,
         past : translatePast,
         s : 'puS lup',
+        ss : translate,
         m : 'wa’ tup',
         mm : translate,
         h : 'wa’ rep',
@@ -14762,7 +15016,7 @@ return tlh;
 
 
 /***/ }),
-/* 394 */
+/* 397 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14771,7 +15025,7 @@ return tlh;
 //!           Burak Yiğit Kaya: https://github.com/BYK
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -14824,6 +15078,7 @@ var tr = moment.defineLocale('tr', {
         future : '%s sonra',
         past : '%s önce',
         s : 'birkaç saniye',
+        ss : '%d saniye',
         m : 'bir dakika',
         mm : '%d dakika',
         h : 'bir saat',
@@ -14857,7 +15112,7 @@ return tr;
 
 
 /***/ }),
-/* 395 */
+/* 398 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14866,7 +15121,7 @@ return tr;
 //! author : Iustì Canun
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -14911,6 +15166,7 @@ var tzl = moment.defineLocale('tzl', {
         future : 'osprei %s',
         past : 'ja%s',
         s : processRelativeTime,
+        ss : processRelativeTime,
         m : processRelativeTime,
         mm : processRelativeTime,
         h : processRelativeTime,
@@ -14933,6 +15189,7 @@ var tzl = moment.defineLocale('tzl', {
 function processRelativeTime(number, withoutSuffix, key, isFuture) {
     var format = {
         's': ['viensas secunds', '\'iensas secunds'],
+        'ss': [number + ' secunds', '' + number + ' secunds'],
         'm': ['\'n míut', '\'iens míut'],
         'mm': [number + ' míuts', '' + number + ' míuts'],
         'h': ['\'n þora', '\'iensa þora'],
@@ -14953,7 +15210,7 @@ return tzl;
 
 
 /***/ }),
-/* 396 */
+/* 399 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14961,7 +15218,7 @@ return tzl;
 //! author : Abdel Said : https://github.com/abdelsaid
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -14993,6 +15250,7 @@ var tzm = moment.defineLocale('tzm', {
         future : 'ⴷⴰⴷⵅ ⵙ ⵢⴰⵏ %s',
         past : 'ⵢⴰⵏ %s',
         s : 'ⵉⵎⵉⴽ',
+        ss : '%d ⵉⵎⵉⴽ',
         m : 'ⵎⵉⵏⵓⴺ',
         mm : '%d ⵎⵉⵏⵓⴺ',
         h : 'ⵙⴰⵄⴰ',
@@ -15016,7 +15274,7 @@ return tzm;
 
 
 /***/ }),
-/* 397 */
+/* 400 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15024,7 +15282,7 @@ return tzm;
 //! author : Abdel Said : https://github.com/abdelsaid
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -15056,6 +15314,7 @@ var tzmLatn = moment.defineLocale('tzm-latn', {
         future : 'dadkh s yan %s',
         past : 'yan %s',
         s : 'imik',
+        ss : '%d imik',
         m : 'minuḍ',
         mm : '%d minuḍ',
         h : 'saɛa',
@@ -15079,7 +15338,7 @@ return tzmLatn;
 
 
 /***/ }),
-/* 398 */
+/* 401 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15088,7 +15347,7 @@ return tzmLatn;
 //! Author : Menelion Elensúle : https://github.com/Oire
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -15100,6 +15359,7 @@ function plural(word, num) {
 }
 function relativeTimeWithPlural(number, withoutSuffix, key) {
     var format = {
+        'ss': withoutSuffix ? 'секунда_секунди_секунд' : 'секунду_секунди_секунд',
         'mm': withoutSuffix ? 'хвилина_хвилини_хвилин' : 'хвилину_хвилини_хвилин',
         'hh': withoutSuffix ? 'година_години_годин' : 'годину_години_годин',
         'dd': 'день_дні_днів',
@@ -15181,6 +15441,7 @@ var uk = moment.defineLocale('uk', {
         future : 'за %s',
         past : '%s тому',
         s : 'декілька секунд',
+        ss : relativeTimeWithPlural,
         m : relativeTimeWithPlural,
         mm : relativeTimeWithPlural,
         h : 'годину',
@@ -15235,7 +15496,7 @@ return uk;
 
 
 /***/ }),
-/* 399 */
+/* 402 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15244,7 +15505,7 @@ return uk;
 //! author : Zack : https://github.com/ZackVision
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -15310,6 +15571,7 @@ var ur = moment.defineLocale('ur', {
         future : '%s بعد',
         past : '%s قبل',
         s : 'چند سیکنڈ',
+        ss : '%d سیکنڈ',
         m : 'ایک منٹ',
         mm : '%d منٹ',
         h : 'ایک گھنٹہ',
@@ -15339,7 +15601,7 @@ return ur;
 
 
 /***/ }),
-/* 400 */
+/* 403 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15347,7 +15609,7 @@ return ur;
 //! author : Sardor Muminov : https://github.com/muminoff
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -15379,6 +15641,7 @@ var uz = moment.defineLocale('uz', {
         future : 'Якин %s ичида',
         past : 'Бир неча %s олдин',
         s : 'фурсат',
+        ss : '%d фурсат',
         m : 'бир дакика',
         mm : '%d дакика',
         h : 'бир соат',
@@ -15402,7 +15665,7 @@ return uz;
 
 
 /***/ }),
-/* 401 */
+/* 404 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15410,7 +15673,7 @@ return uz;
 //! author : Rasulbek Mirzayev : github.com/Rasulbeeek
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -15442,6 +15705,7 @@ var uzLatn = moment.defineLocale('uz-latn', {
         future : 'Yaqin %s ichida',
         past : 'Bir necha %s oldin',
         s : 'soniya',
+        ss : '%d soniya',
         m : 'bir daqiqa',
         mm : '%d daqiqa',
         h : 'bir soat',
@@ -15465,7 +15729,7 @@ return uzLatn;
 
 
 /***/ }),
-/* 402 */
+/* 405 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15473,7 +15737,7 @@ return uzLatn;
 //! author : Bang Nguyen : https://github.com/bangnk
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -15522,6 +15786,7 @@ var vi = moment.defineLocale('vi', {
         future : '%s tới',
         past : '%s trước',
         s : 'vài giây',
+        ss : '%d giây' ,
         m : 'một phút',
         mm : '%d phút',
         h : 'một giờ',
@@ -15549,7 +15814,7 @@ return vi;
 
 
 /***/ }),
-/* 403 */
+/* 406 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15557,7 +15822,7 @@ return vi;
 //! author : Andrew Hood : https://github.com/andrewhood125
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -15590,6 +15855,7 @@ var xPseudo = moment.defineLocale('x-pseudo', {
         future : 'í~ñ %s',
         past : '%s á~gó',
         s : 'á ~féw ~sécó~ñds',
+        ss : '%d s~écóñ~ds',
         m : 'á ~míñ~úté',
         mm : '%d m~íñú~tés',
         h : 'á~ñ hó~úr',
@@ -15622,7 +15888,7 @@ return xPseudo;
 
 
 /***/ }),
-/* 404 */
+/* 407 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15630,7 +15896,7 @@ return xPseudo;
 //! author : Atolagbe Abisoye : https://github.com/andela-batolagbe
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -15662,6 +15928,7 @@ var yo = moment.defineLocale('yo', {
         future : 'ní %s',
         past : '%s kọjá',
         s : 'ìsẹjú aayá die',
+        ss :'aayá %d',
         m : 'ìsẹjú kan',
         mm : 'ìsẹjú %d',
         h : 'wákati kan',
@@ -15687,7 +15954,7 @@ return yo;
 
 
 /***/ }),
-/* 405 */
+/* 408 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15696,7 +15963,7 @@ return yo;
 //! author : Zeno Zeng : https://github.com/zenozeng
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -15711,14 +15978,14 @@ var zhCn = moment.defineLocale('zh-cn', {
     longDateFormat : {
         LT : 'HH:mm',
         LTS : 'HH:mm:ss',
-        L : 'YYYY年MMMD日',
-        LL : 'YYYY年MMMD日',
-        LLL : 'YYYY年MMMD日Ah点mm分',
-        LLLL : 'YYYY年MMMD日ddddAh点mm分',
-        l : 'YYYY年MMMD日',
-        ll : 'YYYY年MMMD日',
-        lll : 'YYYY年MMMD日 HH:mm',
-        llll : 'YYYY年MMMD日dddd HH:mm'
+        L : 'YYYY/MM/DD',
+        LL : 'YYYY年M月D日',
+        LLL : 'YYYY年M月D日Ah点mm分',
+        LLLL : 'YYYY年M月D日ddddAh点mm分',
+        l : 'YYYY/M/D',
+        ll : 'YYYY年M月D日',
+        lll : 'YYYY年M月D日 HH:mm',
+        llll : 'YYYY年M月D日dddd HH:mm'
     },
     meridiemParse: /凌晨|早上|上午|中午|下午|晚上/,
     meridiemHour: function (hour, meridiem) {
@@ -15779,6 +16046,7 @@ var zhCn = moment.defineLocale('zh-cn', {
         future : '%s内',
         past : '%s前',
         s : '几秒',
+        ss : '%d 秒',
         m : '1 分钟',
         mm : '%d 分钟',
         h : '1 小时',
@@ -15803,7 +16071,7 @@ return zhCn;
 
 
 /***/ }),
-/* 406 */
+/* 409 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15813,7 +16081,7 @@ return zhCn;
 //! author : Konstantin : https://github.com/skfd
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -15828,14 +16096,14 @@ var zhHk = moment.defineLocale('zh-hk', {
     longDateFormat : {
         LT : 'HH:mm',
         LTS : 'HH:mm:ss',
-        L : 'YYYY年MMMD日',
-        LL : 'YYYY年MMMD日',
-        LLL : 'YYYY年MMMD日 HH:mm',
-        LLLL : 'YYYY年MMMD日dddd HH:mm',
-        l : 'YYYY年MMMD日',
-        ll : 'YYYY年MMMD日',
-        lll : 'YYYY年MMMD日 HH:mm',
-        llll : 'YYYY年MMMD日dddd HH:mm'
+        L : 'YYYY/MM/DD',
+        LL : 'YYYY年M月D日',
+        LLL : 'YYYY年M月D日 HH:mm',
+        LLLL : 'YYYY年M月D日dddd HH:mm',
+        l : 'YYYY/M/D',
+        ll : 'YYYY年M月D日',
+        lll : 'YYYY年M月D日 HH:mm',
+        llll : 'YYYY年M月D日dddd HH:mm'
     },
     meridiemParse: /凌晨|早上|上午|中午|下午|晚上/,
     meridiemHour : function (hour, meridiem) {
@@ -15894,6 +16162,7 @@ var zhHk = moment.defineLocale('zh-hk', {
         future : '%s內',
         past : '%s前',
         s : '幾秒',
+        ss : '%d 秒',
         m : '1 分鐘',
         mm : '%d 分鐘',
         h : '1 小時',
@@ -15913,7 +16182,7 @@ return zhHk;
 
 
 /***/ }),
-/* 407 */
+/* 410 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15922,7 +16191,7 @@ return zhHk;
 //! author : Chris Lam : https://github.com/hehachris
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(288)) :
+    true ? factory(__webpack_require__(290)) :
    typeof define === 'function' && define.amd ? define(['../moment'], factory) :
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
@@ -15937,14 +16206,14 @@ var zhTw = moment.defineLocale('zh-tw', {
     longDateFormat : {
         LT : 'HH:mm',
         LTS : 'HH:mm:ss',
-        L : 'YYYY年MMMD日',
-        LL : 'YYYY年MMMD日',
-        LLL : 'YYYY年MMMD日 HH:mm',
-        LLLL : 'YYYY年MMMD日dddd HH:mm',
-        l : 'YYYY年MMMD日',
-        ll : 'YYYY年MMMD日',
-        lll : 'YYYY年MMMD日 HH:mm',
-        llll : 'YYYY年MMMD日dddd HH:mm'
+        L : 'YYYY/MM/DD',
+        LL : 'YYYY年M月D日',
+        LLL : 'YYYY年M月D日 HH:mm',
+        LLLL : 'YYYY年M月D日dddd HH:mm',
+        l : 'YYYY/M/D',
+        ll : 'YYYY年M月D日',
+        lll : 'YYYY年M月D日 HH:mm',
+        llll : 'YYYY年M月D日dddd HH:mm'
     },
     meridiemParse: /凌晨|早上|上午|中午|下午|晚上/,
     meridiemHour : function (hour, meridiem) {
@@ -16003,6 +16272,7 @@ var zhTw = moment.defineLocale('zh-tw', {
         future : '%s內',
         past : '%s前',
         s : '幾秒',
+        ss : '%d 秒',
         m : '1 分鐘',
         mm : '%d 分鐘',
         h : '1 小時',
@@ -16022,7 +16292,7 @@ return zhTw;
 
 
 /***/ }),
-/* 408 */
+/* 411 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16030,8 +16300,8 @@ return zhTw;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ComponentsModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actlist_actlist__ = __webpack_require__(409);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pipes_pipes_module__ = __webpack_require__(289);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actlist_actlist__ = __webpack_require__(412);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pipes_pipes_module__ = __webpack_require__(291);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -16061,7 +16331,7 @@ ComponentsModule = __decorate([
 //# sourceMappingURL=components.module.js.map
 
 /***/ }),
-/* 409 */
+/* 412 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16099,7 +16369,7 @@ __decorate([
 ], ActlistComponent.prototype, "events", void 0);
 ActlistComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'actlist',template:/*ion-inline-start:"/Users/mac/home/yqbapp/src/components/actlist/actlist.html"*/'<ion-grid>\n  	<ion-row align-items-start text-center\n    *ngFor="let obj of data;">\n      	<ion-col (click)="onEvent(\'onDetail\', act)">\n        	<div>\n            	<br><img src="assets/img/h-act-1.png">\n            	<div text-left padding>\n              	<span class="home-4-1">{{obj.name}}</span>\n              	<br>\n                <span class="title">\n                  参与\n                  <span class="tip">{{obj.price + \' \' }} {{ obj.btype | bcoin}}\n                  </span>\n                </span>\n            </div>  \n        </div>\n      </ion-col>\n  	</ion-row>\n</ion-grid>'/*ion-inline-end:"/Users/mac/home/yqbapp/src/components/actlist/actlist.html"*/
+        selector: 'actlist',template:/*ion-inline-start:"/Users/mac/home/wkb/src/components/actlist/actlist.html"*/'<ion-grid>\n  	<ion-row align-items-start text-center\n    *ngFor="let obj of data;">\n      	<ion-col (click)="onEvent(\'onDetail\', act)">\n        	<div>\n            	<br><img src="assets/img/h-act-1.png">\n            	<div text-left padding>\n              	<span class="home-4-1">{{obj.name}}</span>\n              	<br>\n                <span class="title">\n                  参与\n                  <span class="tip">{{obj.price + \' \' }} {{ obj.btype | bcoin}}\n                  </span>\n                </span>\n            </div>  \n        </div>\n      </ion-col>\n  	</ion-row>\n</ion-grid>'/*ion-inline-end:"/Users/mac/home/wkb/src/components/actlist/actlist.html"*/
     }),
     __metadata("design:paramtypes", [])
 ], ActlistComponent);
@@ -16107,7 +16377,7 @@ ActlistComponent = __decorate([
 //# sourceMappingURL=actlist.js.map
 
 /***/ }),
-/* 410 */
+/* 413 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16165,14 +16435,14 @@ Len = __decorate([
 //# sourceMappingURL=bcoin.js.map
 
 /***/ }),
-/* 411 */
+/* 414 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Date; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Date1; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_moment__ = __webpack_require__(288);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_moment__ = __webpack_require__(290);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_moment__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -16225,7 +16495,7 @@ Date1 = __decorate([
 //# sourceMappingURL=date.js.map
 
 /***/ }),
-/* 412 */
+/* 415 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -16253,246 +16523,248 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 413 */
+/* 416 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./af": 290,
-	"./af.js": 290,
-	"./ar": 291,
-	"./ar-dz": 292,
-	"./ar-dz.js": 292,
-	"./ar-kw": 293,
-	"./ar-kw.js": 293,
-	"./ar-ly": 294,
-	"./ar-ly.js": 294,
-	"./ar-ma": 295,
-	"./ar-ma.js": 295,
-	"./ar-sa": 296,
-	"./ar-sa.js": 296,
-	"./ar-tn": 297,
-	"./ar-tn.js": 297,
-	"./ar.js": 291,
-	"./az": 298,
-	"./az.js": 298,
-	"./be": 299,
-	"./be.js": 299,
-	"./bg": 300,
-	"./bg.js": 300,
-	"./bm": 301,
-	"./bm.js": 301,
-	"./bn": 302,
-	"./bn.js": 302,
-	"./bo": 303,
-	"./bo.js": 303,
-	"./br": 304,
-	"./br.js": 304,
-	"./bs": 305,
-	"./bs.js": 305,
-	"./ca": 306,
-	"./ca.js": 306,
-	"./cs": 307,
-	"./cs.js": 307,
-	"./cv": 308,
-	"./cv.js": 308,
-	"./cy": 309,
-	"./cy.js": 309,
-	"./da": 310,
-	"./da.js": 310,
-	"./de": 311,
-	"./de-at": 312,
-	"./de-at.js": 312,
-	"./de-ch": 313,
-	"./de-ch.js": 313,
-	"./de.js": 311,
-	"./dv": 314,
-	"./dv.js": 314,
-	"./el": 315,
-	"./el.js": 315,
-	"./en-au": 316,
-	"./en-au.js": 316,
-	"./en-ca": 317,
-	"./en-ca.js": 317,
-	"./en-gb": 318,
-	"./en-gb.js": 318,
-	"./en-ie": 319,
-	"./en-ie.js": 319,
-	"./en-nz": 320,
-	"./en-nz.js": 320,
-	"./eo": 321,
-	"./eo.js": 321,
-	"./es": 322,
-	"./es-do": 323,
-	"./es-do.js": 323,
-	"./es-us": 324,
-	"./es-us.js": 324,
-	"./es.js": 322,
-	"./et": 325,
-	"./et.js": 325,
-	"./eu": 326,
-	"./eu.js": 326,
-	"./fa": 327,
-	"./fa.js": 327,
-	"./fi": 328,
-	"./fi.js": 328,
-	"./fo": 329,
-	"./fo.js": 329,
-	"./fr": 330,
-	"./fr-ca": 331,
-	"./fr-ca.js": 331,
-	"./fr-ch": 332,
-	"./fr-ch.js": 332,
-	"./fr.js": 330,
-	"./fy": 333,
-	"./fy.js": 333,
-	"./gd": 334,
-	"./gd.js": 334,
-	"./gl": 335,
-	"./gl.js": 335,
-	"./gom-latn": 336,
-	"./gom-latn.js": 336,
-	"./gu": 337,
-	"./gu.js": 337,
-	"./he": 338,
-	"./he.js": 338,
-	"./hi": 339,
-	"./hi.js": 339,
-	"./hr": 340,
-	"./hr.js": 340,
-	"./hu": 341,
-	"./hu.js": 341,
-	"./hy-am": 342,
-	"./hy-am.js": 342,
-	"./id": 343,
-	"./id.js": 343,
-	"./is": 344,
-	"./is.js": 344,
-	"./it": 345,
-	"./it.js": 345,
-	"./ja": 346,
-	"./ja.js": 346,
-	"./jv": 347,
-	"./jv.js": 347,
-	"./ka": 348,
-	"./ka.js": 348,
-	"./kk": 349,
-	"./kk.js": 349,
-	"./km": 350,
-	"./km.js": 350,
-	"./kn": 351,
-	"./kn.js": 351,
-	"./ko": 352,
-	"./ko.js": 352,
-	"./ky": 353,
-	"./ky.js": 353,
-	"./lb": 354,
-	"./lb.js": 354,
-	"./lo": 355,
-	"./lo.js": 355,
-	"./lt": 356,
-	"./lt.js": 356,
-	"./lv": 357,
-	"./lv.js": 357,
-	"./me": 358,
-	"./me.js": 358,
-	"./mi": 359,
-	"./mi.js": 359,
-	"./mk": 360,
-	"./mk.js": 360,
-	"./ml": 361,
-	"./ml.js": 361,
-	"./mr": 362,
-	"./mr.js": 362,
-	"./ms": 363,
-	"./ms-my": 364,
-	"./ms-my.js": 364,
-	"./ms.js": 363,
-	"./my": 365,
-	"./my.js": 365,
-	"./nb": 366,
-	"./nb.js": 366,
-	"./ne": 367,
-	"./ne.js": 367,
-	"./nl": 368,
-	"./nl-be": 369,
-	"./nl-be.js": 369,
-	"./nl.js": 368,
-	"./nn": 370,
-	"./nn.js": 370,
-	"./pa-in": 371,
-	"./pa-in.js": 371,
-	"./pl": 372,
-	"./pl.js": 372,
-	"./pt": 373,
-	"./pt-br": 374,
-	"./pt-br.js": 374,
-	"./pt.js": 373,
-	"./ro": 375,
-	"./ro.js": 375,
-	"./ru": 376,
-	"./ru.js": 376,
-	"./sd": 377,
-	"./sd.js": 377,
-	"./se": 378,
-	"./se.js": 378,
-	"./si": 379,
-	"./si.js": 379,
-	"./sk": 380,
-	"./sk.js": 380,
-	"./sl": 381,
-	"./sl.js": 381,
-	"./sq": 382,
-	"./sq.js": 382,
-	"./sr": 383,
-	"./sr-cyrl": 384,
-	"./sr-cyrl.js": 384,
-	"./sr.js": 383,
-	"./ss": 385,
-	"./ss.js": 385,
-	"./sv": 386,
-	"./sv.js": 386,
-	"./sw": 387,
-	"./sw.js": 387,
-	"./ta": 388,
-	"./ta.js": 388,
-	"./te": 389,
-	"./te.js": 389,
-	"./tet": 390,
-	"./tet.js": 390,
-	"./th": 391,
-	"./th.js": 391,
-	"./tl-ph": 392,
-	"./tl-ph.js": 392,
-	"./tlh": 393,
-	"./tlh.js": 393,
-	"./tr": 394,
-	"./tr.js": 394,
-	"./tzl": 395,
-	"./tzl.js": 395,
-	"./tzm": 396,
-	"./tzm-latn": 397,
-	"./tzm-latn.js": 397,
-	"./tzm.js": 396,
-	"./uk": 398,
-	"./uk.js": 398,
-	"./ur": 399,
-	"./ur.js": 399,
-	"./uz": 400,
-	"./uz-latn": 401,
-	"./uz-latn.js": 401,
-	"./uz.js": 400,
-	"./vi": 402,
-	"./vi.js": 402,
-	"./x-pseudo": 403,
-	"./x-pseudo.js": 403,
-	"./yo": 404,
-	"./yo.js": 404,
-	"./zh-cn": 405,
-	"./zh-cn.js": 405,
-	"./zh-hk": 406,
-	"./zh-hk.js": 406,
-	"./zh-tw": 407,
-	"./zh-tw.js": 407
+	"./af": 292,
+	"./af.js": 292,
+	"./ar": 293,
+	"./ar-dz": 294,
+	"./ar-dz.js": 294,
+	"./ar-kw": 295,
+	"./ar-kw.js": 295,
+	"./ar-ly": 296,
+	"./ar-ly.js": 296,
+	"./ar-ma": 297,
+	"./ar-ma.js": 297,
+	"./ar-sa": 298,
+	"./ar-sa.js": 298,
+	"./ar-tn": 299,
+	"./ar-tn.js": 299,
+	"./ar.js": 293,
+	"./az": 300,
+	"./az.js": 300,
+	"./be": 301,
+	"./be.js": 301,
+	"./bg": 302,
+	"./bg.js": 302,
+	"./bm": 303,
+	"./bm.js": 303,
+	"./bn": 304,
+	"./bn.js": 304,
+	"./bo": 305,
+	"./bo.js": 305,
+	"./br": 306,
+	"./br.js": 306,
+	"./bs": 307,
+	"./bs.js": 307,
+	"./ca": 308,
+	"./ca.js": 308,
+	"./cs": 309,
+	"./cs.js": 309,
+	"./cv": 310,
+	"./cv.js": 310,
+	"./cy": 311,
+	"./cy.js": 311,
+	"./da": 312,
+	"./da.js": 312,
+	"./de": 313,
+	"./de-at": 314,
+	"./de-at.js": 314,
+	"./de-ch": 315,
+	"./de-ch.js": 315,
+	"./de.js": 313,
+	"./dv": 316,
+	"./dv.js": 316,
+	"./el": 317,
+	"./el.js": 317,
+	"./en-au": 318,
+	"./en-au.js": 318,
+	"./en-ca": 319,
+	"./en-ca.js": 319,
+	"./en-gb": 320,
+	"./en-gb.js": 320,
+	"./en-ie": 321,
+	"./en-ie.js": 321,
+	"./en-nz": 322,
+	"./en-nz.js": 322,
+	"./eo": 323,
+	"./eo.js": 323,
+	"./es": 324,
+	"./es-do": 325,
+	"./es-do.js": 325,
+	"./es-us": 326,
+	"./es-us.js": 326,
+	"./es.js": 324,
+	"./et": 327,
+	"./et.js": 327,
+	"./eu": 328,
+	"./eu.js": 328,
+	"./fa": 329,
+	"./fa.js": 329,
+	"./fi": 330,
+	"./fi.js": 330,
+	"./fo": 331,
+	"./fo.js": 331,
+	"./fr": 332,
+	"./fr-ca": 333,
+	"./fr-ca.js": 333,
+	"./fr-ch": 334,
+	"./fr-ch.js": 334,
+	"./fr.js": 332,
+	"./fy": 335,
+	"./fy.js": 335,
+	"./gd": 336,
+	"./gd.js": 336,
+	"./gl": 337,
+	"./gl.js": 337,
+	"./gom-latn": 338,
+	"./gom-latn.js": 338,
+	"./gu": 339,
+	"./gu.js": 339,
+	"./he": 340,
+	"./he.js": 340,
+	"./hi": 341,
+	"./hi.js": 341,
+	"./hr": 342,
+	"./hr.js": 342,
+	"./hu": 343,
+	"./hu.js": 343,
+	"./hy-am": 344,
+	"./hy-am.js": 344,
+	"./id": 345,
+	"./id.js": 345,
+	"./is": 346,
+	"./is.js": 346,
+	"./it": 347,
+	"./it.js": 347,
+	"./ja": 348,
+	"./ja.js": 348,
+	"./jv": 349,
+	"./jv.js": 349,
+	"./ka": 350,
+	"./ka.js": 350,
+	"./kk": 351,
+	"./kk.js": 351,
+	"./km": 352,
+	"./km.js": 352,
+	"./kn": 353,
+	"./kn.js": 353,
+	"./ko": 354,
+	"./ko.js": 354,
+	"./ky": 355,
+	"./ky.js": 355,
+	"./lb": 356,
+	"./lb.js": 356,
+	"./lo": 357,
+	"./lo.js": 357,
+	"./lt": 358,
+	"./lt.js": 358,
+	"./lv": 359,
+	"./lv.js": 359,
+	"./me": 360,
+	"./me.js": 360,
+	"./mi": 361,
+	"./mi.js": 361,
+	"./mk": 362,
+	"./mk.js": 362,
+	"./ml": 363,
+	"./ml.js": 363,
+	"./mr": 364,
+	"./mr.js": 364,
+	"./ms": 365,
+	"./ms-my": 366,
+	"./ms-my.js": 366,
+	"./ms.js": 365,
+	"./mt": 367,
+	"./mt.js": 367,
+	"./my": 368,
+	"./my.js": 368,
+	"./nb": 369,
+	"./nb.js": 369,
+	"./ne": 370,
+	"./ne.js": 370,
+	"./nl": 371,
+	"./nl-be": 372,
+	"./nl-be.js": 372,
+	"./nl.js": 371,
+	"./nn": 373,
+	"./nn.js": 373,
+	"./pa-in": 374,
+	"./pa-in.js": 374,
+	"./pl": 375,
+	"./pl.js": 375,
+	"./pt": 376,
+	"./pt-br": 377,
+	"./pt-br.js": 377,
+	"./pt.js": 376,
+	"./ro": 378,
+	"./ro.js": 378,
+	"./ru": 379,
+	"./ru.js": 379,
+	"./sd": 380,
+	"./sd.js": 380,
+	"./se": 381,
+	"./se.js": 381,
+	"./si": 382,
+	"./si.js": 382,
+	"./sk": 383,
+	"./sk.js": 383,
+	"./sl": 384,
+	"./sl.js": 384,
+	"./sq": 385,
+	"./sq.js": 385,
+	"./sr": 386,
+	"./sr-cyrl": 387,
+	"./sr-cyrl.js": 387,
+	"./sr.js": 386,
+	"./ss": 388,
+	"./ss.js": 388,
+	"./sv": 389,
+	"./sv.js": 389,
+	"./sw": 390,
+	"./sw.js": 390,
+	"./ta": 391,
+	"./ta.js": 391,
+	"./te": 392,
+	"./te.js": 392,
+	"./tet": 393,
+	"./tet.js": 393,
+	"./th": 394,
+	"./th.js": 394,
+	"./tl-ph": 395,
+	"./tl-ph.js": 395,
+	"./tlh": 396,
+	"./tlh.js": 396,
+	"./tr": 397,
+	"./tr.js": 397,
+	"./tzl": 398,
+	"./tzl.js": 398,
+	"./tzm": 399,
+	"./tzm-latn": 400,
+	"./tzm-latn.js": 400,
+	"./tzm.js": 399,
+	"./uk": 401,
+	"./uk.js": 401,
+	"./ur": 402,
+	"./ur.js": 402,
+	"./uz": 403,
+	"./uz-latn": 404,
+	"./uz-latn.js": 404,
+	"./uz.js": 403,
+	"./vi": 405,
+	"./vi.js": 405,
+	"./x-pseudo": 406,
+	"./x-pseudo.js": 406,
+	"./yo": 407,
+	"./yo.js": 407,
+	"./zh-cn": 408,
+	"./zh-cn.js": 408,
+	"./zh-hk": 409,
+	"./zh-hk.js": 409,
+	"./zh-tw": 410,
+	"./zh-tw.js": 410
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -16508,10 +16780,10 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 413;
+webpackContext.id = 416;
 
 /***/ }),
-/* 414 */
+/* 417 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16572,15 +16844,16 @@ Status = __decorate([
 //# sourceMappingURL=billstatus.js.map
 
 /***/ }),
-/* 415 */,
-/* 416 */
+/* 418 */,
+/* 419 */,
+/* 420 */,
+/* 421 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ActlistPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Game2Page; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_http_service_http_service__ = __webpack_require__(39);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -16592,45 +16865,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
-
-var ActlistPage = (function () {
-    function ActlistPage(navCtrl, navParams, http) {
+var Game2Page = (function () {
+    function Game2Page(navCtrl, navParams) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
-        this.http = http;
-        this.search = { status: '1' };
-        this.datalist = [];
-        this.list();
     }
-    ActlistPage.prototype.list = function () {
-        var _this = this;
-        this.http.actlist(this.search, function (result) {
-            if (result)
-                _this.datalist = result.list;
-        });
+    Game2Page.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad resultPage');
     };
-    ActlistPage.prototype.selectPage = function (val) {
-        this.search.status = val + '';
-        console.log(this.search.status);
-        this.list();
-    };
-    ActlistPage.prototype.detail = function (item) {
-        this.navCtrl.push('ActdetailPage', { item: item });
-    };
-    ActlistPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad actlistPage');
-    };
-    return ActlistPage;
+    return Game2Page;
 }());
-ActlistPage = __decorate([
+Game2Page = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* IonicPage */])(),
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-actlist',template:/*ion-inline-start:"/Users/mac/home/yqbapp/src/pages/actlist/actlist.html"*/'<ion-header>\n  	<ion-navbar color="primary">\n    	<ion-title>活动中心</ion-title>\n  	</ion-navbar>\n</ion-header>\n<ion-header class="subheader">\n	<ion-toolbar>\n	  	<ion-segment [(ngModel)]="pet">\n	        <ion-segment-button value="1" (ionSelect)="selectPage(1)">\n	          进行中\n	        </ion-segment-button>\n	        <ion-segment-button value="2" (ionSelect)="selectPage(2)">\n	          开奖中\n	        </ion-segment-button>\n	        <ion-segment-button value="3" (ionSelect)="selectPage(3)">\n	          已结束\n	        </ion-segment-button>\n	    </ion-segment>\n    </ion-toolbar>\n</ion-header>\n\n<ion-content>\n	<ion-list class="actlist" inset>\n		\n	  	<ion-item *ngFor="let obj of datalist;">\n		    <ion-thumbnail item-start>\n		      <img src="assets/img/btb.png">\n		    </ion-thumbnail>\n		    <h2>{{obj.name}}</h2>\n            <p class="title">\n            	<ion-row>\n			    	<ion-col col-2>起投</ion-col>\n			    	<ion-col text-left col-9>{{obj.price}}枚</ion-col>\n			  	</ion-row>\n			</p>\n			<p class="title-1">\n            	<ion-row>\n			    	<ion-col col-2>币种</ion-col>\n			    	<ion-col text-left col-9>{{ obj.btype | bcoin}}</ion-col>\n			  	</ion-row>\n			</p>\n            <p class="title-1">\n            	<ion-row>\n            		<ion-col col-4>{{obj.end}}</ion-col>\n            	</ion-row>	\n            </p>\n\n	    	<button *ngIf="search.status==\'1\'" ion-button round item-end (click)="detail(obj)">立即参与</button>\n	    	<button *ngIf="search.status!=\'1\'" ion-button round item-end (click)="detail(obj)">查看详情</button>\n	  	</ion-item>\n\n	</ion-list>\n</ion-content>\n'/*ion-inline-end:"/Users/mac/home/yqbapp/src/pages/actlist/actlist.html"*/,
+        selector: 'page-game1',template:/*ion-inline-start:"/Users/mac/home/wkb/src/pages/game/game-2.html"*/'<ion-header>\n  	<ion-navbar color="primary">\n    	<ion-title>游戏规则</ion-title>\n  	</ion-navbar>\n</ion-header>\n\n\n<ion-content class="content">\n	<ion-list>\n		<p padding>例：7a b4 ff 对应规则为 70 14 55</p>\n		<ion-grid>\n		  	<ion-row style="border-left: 1px solid #ddd;">\n		    	<ion-col col-2>a=0</ion-col>\n		    	<ion-col col-2>b=1</ion-col>\n		    	<ion-col col-2>c=2</ion-col>\n		    	<ion-col col-2>d=3</ion-col>\n		    	<ion-col col-2>e=4</ion-col>\n		    	<ion-col col-2>f=5</ion-col>\n		 	</ion-row>\n		</ion-grid> 	\n		<ion-grid>\n		  	<ion-row>\n		    	<ion-col col-4>00 52</ion-col><!-- 0a 5c-->\n		    	<ion-col col-2>红桃2</ion-col>\n		    	<ion-col col-4>24 76</ion-col><!-- 2e-->\n		    	<ion-col col-2>红桃8</ion-col>\n		 	</ion-row>\n\n		 	<ion-row>\n		    	<ion-col col-4>01 53</ion-col><!--0b  5d-->\n		    	<ion-col col-2>方块2</ion-col>\n		    	<ion-col col-4>25 77</ion-col><!--2f -->\n		    	<ion-col col-2>方块8</ion-col>\n		 	</ion-row>\n\n		 	<ion-row>\n		    	<ion-col col-4>02 54</ion-col><!-- 0c 5e-->\n		    	<ion-col col-2>黑桃2</ion-col>\n		    	<ion-col col-4>26 78</ion-col>\n		    	<ion-col col-2>黑桃8</ion-col>\n		 	</ion-row>\n\n		 	<ion-row>\n		    	<ion-col col-4>03 55 </ion-col><!-- 0d 5f-->\n		    	<ion-col col-2>梅花2</ion-col>\n		    	<ion-col col-4>27 79</ion-col>\n		    	<ion-col col-2>梅花8</ion-col>\n		 	</ion-row>\n\n		 	<ion-row>\n		    	<ion-col col-4>04 56</ion-col><!-- 0e -->\n		    	<ion-col col-2>红桃3</ion-col>\n		    	<ion-col col-4>28 80</ion-col><!--  8a -->\n		    	<ion-col col-2>红桃9</ion-col>\n		 	</ion-row>\n\n		 	<ion-row>\n		    	<ion-col col-4>05 57</ion-col><!-- 0f -->\n		    	<ion-col col-2>方块3</ion-col>\n		    	<ion-col col-4>29 81</ion-col><!--  8b -->\n		    	<ion-col col-2>方块9</ion-col>\n		 	</ion-row>\n\n		 	<ion-row>\n		    	<ion-col col-4>06 58</ion-col>\n		    	<ion-col col-2>黑桃3</ion-col>\n		    	<ion-col col-4>30 82</ion-col><!-- 3a   8c-->\n		    	<ion-col col-2>黑桃9</ion-col>\n		 	</ion-row>\n\n		 	<ion-row>\n		    	<ion-col col-4>07 59</ion-col>\n		    	<ion-col col-2>梅花3</ion-col>\n		    	<ion-col col-4>31 83</ion-col><!-- 3b  8d-->\n		    	<ion-col col-2>梅花9</ion-col>\n		 	</ion-row>\n\n		 	<ion-row>\n		    	<ion-col col-4>08 60</ion-col><!-- 6a-->\n		    	<ion-col col-2>红桃4</ion-col>\n		    	<ion-col col-4>32 84</ion-col><!-- 3c  8e -->\n		    	<ion-col col-2>红桃10</ion-col>\n		 	</ion-row>\n\n		 	<ion-row>\n		    	<ion-col col-4>09 61</ion-col><!-- 6b -->\n		    	<ion-col col-2>方块4</ion-col>\n		    	<ion-col col-4>33 85</ion-col><!-- 3d  8f-->\n		    	<ion-col col-2>方块10</ion-col>\n		 	</ion-row>\n\n		 	<ion-row>\n		    	<ion-col col-4>10 62</ion-col><!-- 1a   6c-->\n		    	<ion-col col-2>黑桃4</ion-col>\n		    	<ion-col col-4>34 86</ion-col><!-- 3e -->\n		    	<ion-col col-2>黑桃10</ion-col>\n		 	</ion-row>\n\n		 	<ion-row>\n		    	<ion-col col-4>11 63</ion-col><!--1b  6d -->\n		    	<ion-col col-2>梅花4</ion-col>\n		    	<ion-col col-4>35 87</ion-col><!-- 3f-->\n		    	<ion-col col-2>梅花10</ion-col>\n		 	</ion-row>\n\n		 	<ion-row>\n		    	<ion-col col-4>12 64</ion-col><!-- 1c  6e -->\n		    	<ion-col col-2>红桃5</ion-col>\n		    	<ion-col col-4>36 88</ion-col>\n		    	<ion-col col-2>红桃J</ion-col>\n		 	</ion-row>\n\n		 	<ion-row>\n		    	<ion-col col-4>13 65</ion-col><!--1d  6f -->\n		    	<ion-col col-2>方块5</ion-col>\n		    	<ion-col col-4>37 89</ion-col>\n		    	<ion-col col-2>方块J</ion-col>\n		 	</ion-row>\n\n		 	<ion-row>\n		    	<ion-col col-4>14 66</ion-col><!--1e  -->\n		    	<ion-col col-2>黑桃5</ion-col>\n		    	<ion-col col-4>38 90</ion-col><!-- 9a  -->\n		    	<ion-col col-2>黑桃J</ion-col>\n		 	</ion-row>\n\n		 	<ion-row>\n		    	<ion-col col-4>15 67</ion-col><!-- 1f -->\n		    	<ion-col col-2>梅花5</ion-col>\n		    	<ion-col col-4>39 91</ion-col><!--  9b-->\n		    	<ion-col col-2>梅花J</ion-col>\n		 	</ion-row>\n\n		 	<ion-row>\n		    	<ion-col col-4>16 68</ion-col>\n		    	<ion-col col-2>红桃6</ion-col>\n		    	<ion-col col-4>40 92</ion-col><!--4a  9c-->\n		    	<ion-col col-2>红桃Q</ion-col>\n		 	</ion-row>\n\n		 	<ion-row>\n		    	<ion-col col-4>17 69</ion-col>\n		    	<ion-col col-2>方块6</ion-col>\n		    	<ion-col col-4>41 93</ion-col><!--4b  9d-->\n		    	<ion-col col-2>方块Q</ion-col>\n		 	</ion-row>\n\n		 	<ion-row>\n		    	<ion-col col-4>18 70</ion-col><!-- 7a-->\n		    	<ion-col col-2>黑桃6</ion-col>\n		    	<ion-col col-4>42 94</ion-col><!--4c  9e-->\n		    	<ion-col col-2>黑桃Q</ion-col>\n		 	</ion-row>\n\n		 	<ion-row>\n		    	<ion-col col-4>19 71</ion-col><!-- 7b-->\n		    	<ion-col col-2>梅花6</ion-col>\n		    	<ion-col col-4>43 95</ion-col><!--4d  9f-->\n		    	<ion-col col-2>梅花Q</ion-col>\n		 	</ion-row>\n\n		 	<ion-row>\n		    	<ion-col col-4>20 72</ion-col><!--2a  7c-->\n		    	<ion-col col-2>红桃7</ion-col>\n		    	<ion-col col-4>44 96</ion-col><!--4e -->\n		    	<ion-col col-2>红桃K</ion-col>\n		 	</ion-row>\n\n		 	<ion-row>\n		    	<ion-col col-4>21 73</ion-col><!--2b  7d-->\n		    	<ion-col col-2>方块7</ion-col>\n		    	<ion-col col-4>45 97</ion-col><!--4f -->\n		    	<ion-col col-2>方块K</ion-col>\n		 	</ion-row>\n\n		 	<ion-row>\n		    	<ion-col col-4>22 74</ion-col><!-- 2c  7e-->\n		    	<ion-col col-2>黑桃7</ion-col>\n		    	<ion-col col-4>46 98</ion-col>\n		    	<ion-col col-2>黑桃K</ion-col>\n		 	</ion-row>\n\n		 	<ion-row>\n		    	<ion-col col-4>23 75</ion-col><!-- 2d  7f-->\n		    	<ion-col col-2>梅花7</ion-col>\n		    	<ion-col col-4>47 99</ion-col>\n		    	<ion-col col-2>梅花K</ion-col>\n		 	</ion-row>\n\n		 	<ion-row>\n		    	<ion-col col-4>48</ion-col>\n		    	<ion-col col-2>红桃A</ion-col>\n		    	<ion-col col-4>50</ion-col><!-- 5a-->\n		    	<ion-col col-2>黑桃A</ion-col>\n		 	</ion-row>\n\n		 	<ion-row>\n		    	<ion-col col-4>49</ion-col>\n		    	<ion-col col-2>方块A</ion-col>\n		    	<ion-col col-4>51</ion-col><!--  5b-->\n		    	<ion-col col-2>梅花A</ion-col>\n		 	</ion-row>\n		  	\n		</ion-grid>\n	</ion-list>\n</ion-content>\n'/*ion-inline-end:"/Users/mac/home/wkb/src/pages/game/game-2.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_http_service_http_service__["a" /* HttpServiceProvider */]])
-], ActlistPage);
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */]])
+], Game2Page);
 
-//# sourceMappingURL=actlist.js.map
+//# sourceMappingURL=game-2.js.map
 
 /***/ })
 ]));

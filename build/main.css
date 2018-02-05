@@ -21525,7 +21525,7 @@ page-actdetail .btn {
   margin-top: 2rem;
 }
 
-page-actlist .list-ios[inset] {
+page-actlist .list-ios[inset], page-actlist .list-md[inset] {
   margin: 0;
 }
 
@@ -21597,6 +21597,54 @@ page-game ion-col[col-4] {
 }
 
 page-game ion-col[col-2]:last-child {
+  border-right: 1px solid #ddd;
+}
+
+page-game1 .content {
+  background: #fefefe;
+}
+
+page-game1 ion-row {
+  border-bottom: 1px solid #ddd;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  color: #DAA520;
+}
+
+page-game1 ion-row:first-child {
+  border-top: 1px solid #ddd;
+}
+
+page-game1 ion-col[col-4] {
+  border-left: 1px solid #ddd;
+  color: #424242;
+}
+
+page-game1 ion-col[col-2]:last-child {
+  border-right: 1px solid #ddd;
+}
+
+page-game2 .content {
+  background: #fefefe;
+}
+
+page-game2 ion-row {
+  border-bottom: 1px solid #ddd;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  color: #DAA520;
+}
+
+page-game2 ion-row:first-child {
+  border-top: 1px solid #ddd;
+}
+
+page-game2 ion-col[col-4] {
+  border-left: 1px solid #ddd;
+  color: #424242;
+}
+
+page-game2 ion-col[col-2]:last-child {
   border-right: 1px solid #ddd;
 }
 

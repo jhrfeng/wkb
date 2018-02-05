@@ -1,4 +1,4 @@
-webpackJsonp([11],{
+webpackJsonp([13],{
 
 /***/ 111:
 /***/ (function(module, exports) {
@@ -23,46 +23,54 @@ webpackEmptyAsyncContext.id = 111;
 var map = {
 	"../pages/actdetail/actdetail.module": [
 		277,
-		9
+		11
 	],
 	"../pages/actlist/actlist.module": [
 		278,
+		10
+	],
+	"../pages/game/game-1.module": [
+		279,
+		9
+	],
+	"../pages/game/game-2.module": [
+		280,
 		8
 	],
 	"../pages/game/game.module": [
-		279,
+		281,
 		7
 	],
 	"../pages/home/home.module": [
-		280,
+		282,
 		6
 	],
 	"../pages/join/join.module": [
-		281,
+		283,
 		5
 	],
 	"../pages/look/look.module": [
-		282,
+		284,
 		4
 	],
 	"../pages/me/me.module": [
-		283,
+		285,
 		3
 	],
 	"../pages/myact/myact.module": [
-		284,
+		286,
 		2
 	],
 	"../pages/news/news.module": [
-		285,
-		10
+		287,
+		12
 	],
 	"../pages/result/result.module": [
-		286,
+		288,
 		1
 	],
 	"../pages/trade/trade.module": [
-		287,
+		289,
 		0
 	]
 };
@@ -238,7 +246,7 @@ var RegisterPage = (function () {
         this.navParams = navParams;
         this.http = http;
         // 定时器
-        this.user = { addr: '', password: '', spassword: '' };
+        this.user = { addr: '', password: '', spassword: '', vcode: '' };
     }
     RegisterPage.prototype.login = function () {
         this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__login_login__["a" /* LoginPage */]);
@@ -265,7 +273,7 @@ var RegisterPage = (function () {
 }());
 RegisterPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-register',template:/*ion-inline-start:"/Users/mac/home/yqbapp/src/pages/register/register.html"*/'<ion-header>\n  	<ion-navbar color="primary">\n    	<ion-title>注  册</ion-title>\n  	</ion-navbar>\n</ion-header>\n\n\n<ion-content>\n	<ion-list margin-top inset>\n	  	<ion-item padding-left padding-right>\n	    	<ion-input [(ngModel)]="user.addr" type="text" placeholder="请输入钱包地址"></ion-input>\n	  	</ion-item>\n	  	<ion-item padding-left padding-right>\n	    	<ion-input [(ngModel)]="user.password" type="password" placeholder="请输入密码"></ion-input>\n	  	</ion-item>\n	  	<ion-item padding-left padding-right>\n	    	<ion-input [(ngModel)]="user.spassword" type="password" placeholder="请再次输入密码"></ion-input>\n	  	</ion-item>\n	  	<ion-item no-lines clear>\n	  		<span item-end>密码丢失后不可找回</span>\n	  	</ion-item>\n	</ion-list>\n\n    <div padding class="btn">\n	  	<button ion-button full \n	  	(click)="register()">注  册</button>\n	</div>\n</ion-content>\n'/*ion-inline-end:"/Users/mac/home/yqbapp/src/pages/register/register.html"*/,
+        selector: 'page-register',template:/*ion-inline-start:"/Users/mac/home/wkb/src/pages/register/register.html"*/'<ion-header>\n  	<ion-navbar color="primary">\n    	<ion-title>注  册</ion-title>\n  	</ion-navbar>\n</ion-header>\n\n\n<ion-content>\n	<ion-list margin-top inset>\n	  	<ion-item padding-left padding-right>\n	    	<ion-input [(ngModel)]="user.addr" type="text" placeholder="请输入钱包地址"></ion-input>\n	  	</ion-item>\n	  	<ion-item padding-left padding-right>\n	    	<ion-input [(ngModel)]="user.password" type="password" placeholder="请输入密码"></ion-input>\n	  	</ion-item>\n	  	<ion-item padding-left padding-right>\n	    	<ion-input [(ngModel)]="user.spassword" type="password" placeholder="请再次输入密码"></ion-input>\n	  	</ion-item>\n	  	<ion-item padding-left padding-right>\n	    	<ion-input [(ngModel)]="user.vcode" type="vcode" placeholder="请输入邀请码"></ion-input>\n	  	</ion-item>\n	  	<ion-item no-lines clear>\n	  		<span item-end>密码丢失后不可找回</span>\n	  	</ion-item>\n	</ion-list>\n\n    <div padding class="btn">\n	  	<button ion-button full \n	  	(click)="register()">注  册</button>\n	</div>\n</ion-content>\n'/*ion-inline-end:"/Users/mac/home/wkb/src/pages/register/register.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_http_service_http_service__["a" /* HttpServiceProvider */]])
 ], RegisterPage);
@@ -366,7 +374,7 @@ var ForgetPage = (function () {
 }());
 ForgetPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-forget',template:/*ion-inline-start:"/Users/mac/home/yqbapp/src/pages/forget/forget.html"*/'<ion-header>\n  	<ion-navbar color="primary">\n    	<ion-title>忘记密码</ion-title>\n  	</ion-navbar>\n</ion-header>\n\n\n<ion-content>\n	<ion-list margin-top inset>\n	  	<ion-item padding-left padding-right>\n	  		<ion-icon name="ios-phone-portrait-outline" item-start></ion-icon>\n	    	<ion-input [(ngModel)]="user.username" type="text" placeholder="请输入手机号"></ion-input>\n	  	</ion-item>\n	  	<ion-item padding-left padding-right>\n	  		<ion-icon name="ios-mail-outline" item-start></ion-icon>\n	    	<ion-input [(ngModel)]="user.smscode" type="text" \n			maxlength="6"\n	    	placeholder="请输入验证码"></ion-input>\n	    	<button ion-button round item-end\n	    	[disabled]="sms.ok"\n	    	(click)="sendsms()">{{sms.text}}</button>\n	  	</ion-item>\n	  	<ion-item padding-left padding-right>\n	  		<ion-icon name="ios-lock-outline" item-start></ion-icon>\n	    	<ion-input [(ngModel)]="user.password" type="password" placeholder="请输入新密码"></ion-input>\n	  	</ion-item>\n	  	<ion-item padding-left padding-right>\n	  		<ion-icon name="ios-lock-outline" item-start></ion-icon>\n	    	<ion-input [(ngModel)]="user.oldpassword" type="password" placeholder="请再次输入密码"></ion-input>\n	  	</ion-item>\n	  	<ion-item no-lines clear></ion-item>\n	</ion-list>\n\n    <div padding class="btn">\n	  	<button ion-button full\n	  	(click)="forget()">提  交</button>\n	</div>\n</ion-content>\n'/*ion-inline-end:"/Users/mac/home/yqbapp/src/pages/forget/forget.html"*/,
+        selector: 'page-forget',template:/*ion-inline-start:"/Users/mac/home/wkb/src/pages/forget/forget.html"*/'<ion-header>\n  	<ion-navbar color="primary">\n    	<ion-title>忘记密码</ion-title>\n  	</ion-navbar>\n</ion-header>\n\n\n<ion-content>\n	<ion-list margin-top inset>\n	  	<ion-item padding-left padding-right>\n	  		<ion-icon name="ios-phone-portrait-outline" item-start></ion-icon>\n	    	<ion-input [(ngModel)]="user.username" type="text" placeholder="请输入手机号"></ion-input>\n	  	</ion-item>\n	  	<ion-item padding-left padding-right>\n	  		<ion-icon name="ios-mail-outline" item-start></ion-icon>\n	    	<ion-input [(ngModel)]="user.smscode" type="text" \n			maxlength="6"\n	    	placeholder="请输入验证码"></ion-input>\n	    	<button ion-button round item-end\n	    	[disabled]="sms.ok"\n	    	(click)="sendsms()">{{sms.text}}</button>\n	  	</ion-item>\n	  	<ion-item padding-left padding-right>\n	  		<ion-icon name="ios-lock-outline" item-start></ion-icon>\n	    	<ion-input [(ngModel)]="user.password" type="password" placeholder="请输入新密码"></ion-input>\n	  	</ion-item>\n	  	<ion-item padding-left padding-right>\n	  		<ion-icon name="ios-lock-outline" item-start></ion-icon>\n	    	<ion-input [(ngModel)]="user.oldpassword" type="password" placeholder="请再次输入密码"></ion-input>\n	  	</ion-item>\n	  	<ion-item no-lines clear></ion-item>\n	</ion-list>\n\n    <div padding class="btn">\n	  	<button ion-button full\n	  	(click)="forget()">提  交</button>\n	</div>\n</ion-content>\n'/*ion-inline-end:"/Users/mac/home/wkb/src/pages/forget/forget.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_http_service_http_service__["a" /* HttpServiceProvider */]])
 ], ForgetPage);
@@ -400,7 +408,7 @@ var TabsPage = (function () {
     return TabsPage;
 }());
 TabsPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({template:/*ion-inline-start:"/Users/mac/home/yqbapp/src/pages/tabs/tabs.html"*/'<ion-tabs>\n  <ion-tab [root]="tab1Root" tabTitle="首页" tabIcon="home"></ion-tab>\n  <ion-tab [root]="tab2Root" tabTitle="活动" tabIcon="pricetag"></ion-tab>\n  <ion-tab [root]="tab3Root" tabTitle="我"   tabIcon="contact"></ion-tab>\n</ion-tabs>\n'/*ion-inline-end:"/Users/mac/home/yqbapp/src/pages/tabs/tabs.html"*/
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({template:/*ion-inline-start:"/Users/mac/home/wkb/src/pages/tabs/tabs.html"*/'<ion-tabs>\n  <ion-tab [root]="tab1Root" tabTitle="首页" tabIcon="home"></ion-tab>\n  <ion-tab [root]="tab2Root" tabTitle="活动" tabIcon="pricetag"></ion-tab>\n  <ion-tab [root]="tab3Root" tabTitle="我"   tabIcon="contact"></ion-tab>\n</ion-tabs>\n'/*ion-inline-end:"/Users/mac/home/wkb/src/pages/tabs/tabs.html"*/
     }),
     __metadata("design:paramtypes", [])
 ], TabsPage);
@@ -500,6 +508,8 @@ AppModule = __decorate([
                 links: [
                     { loadChildren: '../pages/actdetail/actdetail.module#ActdetailPageModule', name: 'ActdetailPage', segment: 'actdetail', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/actlist/actlist.module#ActdetailPageModule', name: 'ActlistPage', segment: 'actlist', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/game/game-1.module#Game1PageModule', name: 'Game1Page', segment: 'game-1', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/game/game-2.module#Game2PageModule', name: 'Game2Page', segment: 'game-2', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/game/game.module#GamePageModule', name: 'GamePage', segment: 'game', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/home/home.module#HomePageModule', name: 'HomePage', segment: 'home', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/join/join.module#JoinPageModule', name: 'JoinPage', segment: 'join', priority: 'low', defaultHistory: [] },
@@ -579,7 +589,7 @@ var MyApp = (function () {
     return MyApp;
 }());
 MyApp = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({template:/*ion-inline-start:"/Users/mac/home/yqbapp/src/app/app.html"*/'<ion-nav [root]="rootPage"></ion-nav>\n'/*ion-inline-end:"/Users/mac/home/yqbapp/src/app/app.html"*/
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({template:/*ion-inline-start:"/Users/mac/home/wkb/src/app/app.html"*/'<ion-nav [root]="rootPage"></ion-nav>\n'/*ion-inline-end:"/Users/mac/home/wkb/src/app/app.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]])
 ], MyApp);
@@ -614,7 +624,7 @@ var AboutPage = (function () {
 }());
 AboutPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-about',template:/*ion-inline-start:"/Users/mac/home/yqbapp/src/pages/about/about.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n      About\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n\n</ion-content>\n'/*ion-inline-end:"/Users/mac/home/yqbapp/src/pages/about/about.html"*/
+        selector: 'page-about',template:/*ion-inline-start:"/Users/mac/home/wkb/src/pages/about/about.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n      About\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n\n</ion-content>\n'/*ion-inline-end:"/Users/mac/home/wkb/src/pages/about/about.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */]])
 ], AboutPage);
@@ -649,7 +659,7 @@ var ContactPage = (function () {
 }());
 ContactPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-contact',template:/*ion-inline-start:"/Users/mac/home/yqbapp/src/pages/contact/contact.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n      Contact\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <ion-list-header>Follow us on Twitter</ion-list-header>\n    <ion-item>\n      <ion-icon name="ionic" item-left></ion-icon>\n      @ionicframework\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"/Users/mac/home/yqbapp/src/pages/contact/contact.html"*/
+        selector: 'page-contact',template:/*ion-inline-start:"/Users/mac/home/wkb/src/pages/contact/contact.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n      Contact\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <ion-list-header>Follow us on Twitter</ion-list-header>\n    <ion-item>\n      <ion-icon name="ionic" item-left></ion-icon>\n      @ionicframework\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"/Users/mac/home/wkb/src/pages/contact/contact.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */]])
 ], ContactPage);
@@ -688,7 +698,7 @@ var SettingPage = (function () {
 }());
 SettingPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-setting',template:/*ion-inline-start:"/Users/mac/home/yqbapp/src/pages/setting/setting.html"*/'<ion-header>\n  	<ion-navbar color="primary">\n   		<ion-buttons start>\n      		<button ion-button icon-only>\n        		<ion-icon name="ios-notifications-outline"></ion-icon>\n      		</button>\n    	</ion-buttons>\n\n    	<ion-buttons end>\n      		<button ion-button icon-only (click)="setting()">\n        		<ion-icon name="ios-settings-outline"></ion-icon>\n      		</button>\n    	</ion-buttons>\n  	</ion-navbar>\n</ion-header>\n\n<ion-content>\n	\n	<h1>111111111111</h1>\n	\n</ion-content>'/*ion-inline-end:"/Users/mac/home/yqbapp/src/pages/setting/setting.html"*/,
+        selector: 'page-setting',template:/*ion-inline-start:"/Users/mac/home/wkb/src/pages/setting/setting.html"*/'<ion-header>\n  	<ion-navbar color="primary">\n   		<ion-buttons start>\n      		<button ion-button icon-only>\n        		<ion-icon name="ios-notifications-outline"></ion-icon>\n      		</button>\n    	</ion-buttons>\n\n    	<ion-buttons end>\n      		<button ion-button icon-only (click)="setting()">\n        		<ion-icon name="ios-settings-outline"></ion-icon>\n      		</button>\n    	</ion-buttons>\n  	</ion-navbar>\n</ion-header>\n\n<ion-content>\n	\n	<h1>111111111111</h1>\n	\n</ion-content>'/*ion-inline-end:"/Users/mac/home/wkb/src/pages/setting/setting.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */]])
 ], SettingPage);
@@ -763,6 +773,30 @@ var HttpServiceProvider = (function () {
         this.alertCtrl = alertCtrl;
         console.log('Hello HttpServiceProvider Provider');
     }
+    // 炸金花新手教程
+    HttpServiceProvider.prototype.znews = function (callback) {
+        this.http.get('/home/znews').then(function (result) {
+            if (result['status'] == 200) {
+                callback(result);
+            }
+            else {
+                callback(null);
+            }
+        }, function (err) {
+        });
+    };
+    // 活动在线人数
+    HttpServiceProvider.prototype.sumact = function (id, callback) {
+        this.http.get('/order/sumact?actid=' + id).then(function (result) {
+            if (result['status'] == 200) {
+                callback(result);
+            }
+            else {
+                callback(null);
+            }
+        }, function (err) {
+        });
+    };
     // 获取消息列表
     HttpServiceProvider.prototype.newlist = function (callback) {
         this.http.get('/home/news').then(function (result) {
@@ -1018,7 +1052,7 @@ var LoginPage = (function () {
 }());
 LoginPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-login',template:/*ion-inline-start:"/Users/mac/home/yqbapp/src/pages/login/login.html"*/'<ion-header>\n  	<ion-navbar color="primary">\n    	<ion-title>登  录</ion-title>\n  	</ion-navbar>\n</ion-header>\n\n\n<ion-content>\n	<div class="logo">\n		<img src="assets/img/login.png" >\n	</div>\n	<ion-list inset>\n	  	<ion-item>\n	    	<ion-input type="text" [(ngModel)]="user.username"\n	    	 placeholder="登录地址"></ion-input>\n	  	</ion-item>\n	  	<ion-item>\n	    	<ion-input type="password" [(ngModel)]="user.password"\n	    	 placeholder="密  码"></ion-input>\n	  	</ion-item>\n	  	<ion-item no-lines>\n	  		<span item-end>登录后请用该地址进行支付</span>\n	  	</ion-item>\n	</ion-list>\n\n    <div padding>\n	  	<button ion-button full (click)="login()">登  录</button>\n	</div>\n\n	<div padding  class="register">\n	  	<button ion-button outline block (click)="register()">注  册</button>\n	</div>\n</ion-content>\n'/*ion-inline-end:"/Users/mac/home/yqbapp/src/pages/login/login.html"*/,
+        selector: 'page-login',template:/*ion-inline-start:"/Users/mac/home/wkb/src/pages/login/login.html"*/'<ion-header>\n  	<ion-navbar color="primary">\n    	<ion-title>登  录</ion-title>\n  	</ion-navbar>\n</ion-header>\n\n\n<ion-content>\n	<div class="logo">\n		<img src="assets/img/login.png" >\n	</div>\n	<ion-list inset>\n	  	<ion-item>\n	    	<ion-input type="text" [(ngModel)]="user.username"\n	    	 placeholder="登录地址"></ion-input>\n	  	</ion-item>\n	  	<ion-item>\n	    	<ion-input type="password" [(ngModel)]="user.password"\n	    	 placeholder="密  码"></ion-input>\n	  	</ion-item>\n	  	<ion-item no-lines>\n	  		<span item-end>登录后请用该地址进行支付</span>\n	  	</ion-item>\n	</ion-list>\n\n    <div padding>\n	  	<button ion-button full (click)="login()">登  录</button>\n	</div>\n\n	<div padding  class="register">\n	  	<button ion-button outline block (click)="register()">注  册</button>\n	</div>\n</ion-content>\n'/*ion-inline-end:"/Users/mac/home/wkb/src/pages/login/login.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */],
