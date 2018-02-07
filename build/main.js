@@ -1,4 +1,4 @@
-webpackJsonp([13],{
+webpackJsonp([15],{
 
 /***/ 111:
 /***/ (function(module, exports) {
@@ -23,54 +23,62 @@ webpackEmptyAsyncContext.id = 111;
 var map = {
 	"../pages/actdetail/actdetail.module": [
 		277,
-		11
+		13
 	],
 	"../pages/actlist/actlist.module": [
 		278,
-		10
+		12
 	],
 	"../pages/game/game-1.module": [
 		279,
-		9
+		11
 	],
 	"../pages/game/game-2.module": [
 		280,
-		8
+		10
+	],
+	"../pages/game/game-3.module": [
+		281,
+		9
 	],
 	"../pages/game/game.module": [
-		281,
-		7
+		282,
+		8
 	],
 	"../pages/home/home.module": [
-		282,
-		6
+		283,
+		7
 	],
 	"../pages/join/join.module": [
-		283,
-		5
+		284,
+		6
 	],
 	"../pages/look/look.module": [
-		284,
-		4
+		285,
+		5
 	],
 	"../pages/me/me.module": [
-		285,
-		3
+		286,
+		4
 	],
 	"../pages/myact/myact.module": [
-		286,
-		2
+		287,
+		3
 	],
 	"../pages/news/news.module": [
-		287,
-		12
+		288,
+		14
 	],
 	"../pages/result/result.module": [
-		288,
+		289,
+		2
+	],
+	"../pages/reward/reward.module": [
+		290,
 		1
 	],
 	"../pages/trade/trade.module": [
-		289,
+		291,
 		0
 	]
 };
@@ -510,6 +518,7 @@ AppModule = __decorate([
                     { loadChildren: '../pages/actlist/actlist.module#ActdetailPageModule', name: 'ActlistPage', segment: 'actlist', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/game/game-1.module#Game1PageModule', name: 'Game1Page', segment: 'game-1', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/game/game-2.module#Game2PageModule', name: 'Game2Page', segment: 'game-2', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/game/game-3.module#Game3PageModule', name: 'Game3Page', segment: 'game-3', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/game/game.module#GamePageModule', name: 'GamePage', segment: 'game', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/home/home.module#HomePageModule', name: 'HomePage', segment: 'home', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/join/join.module#JoinPageModule', name: 'JoinPage', segment: 'join', priority: 'low', defaultHistory: [] },
@@ -518,6 +527,7 @@ AppModule = __decorate([
                     { loadChildren: '../pages/myact/myact.module#MyactPageModule', name: 'MyactPage', segment: 'myact', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/news/news.module#NewsPageModule', name: 'NewsPage', segment: 'news', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/result/result.module#ResultPageModule', name: 'ResultPage', segment: 'result', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/reward/reward.module#RewardPageModule', name: 'RewardPage', segment: 'reward', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/trade/trade.module#TradePageModule', name: 'TradePage', segment: 'trade', priority: 'low', defaultHistory: [] }
                 ]
             }),
